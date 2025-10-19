@@ -1,0 +1,40 @@
+services:
+    db:
+        image: postgres:15
+        restart: always
+        environment:
+            POSTGRES_DB: api-scaffold
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - ./database-tools/init-schema.sql:/docker-entrypoint-initdb.d/init-schema.sql
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+
+    api:
+        build: .
+        depends_on:
+            db:
+                condition: service_healthy
+        environment:
+            DATABASE_HOST: db
+            DATABASE_PORT: 5432
+            DATABASE_USER: postgres
+            DATABASE_PASSWORD: postgres
+            DATABASE: api-scaffold
+            HOST_PORT: 3000
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./dist/database-tools/index.js:/database-tools/index.js:ro
+            - ./database-tools/migrations/typeorm:/database-tools/migrations/typeorm:ro
+            - ./dist/database-tools/env-variables.js:/database-tools/env-variables.js:ro
+
+volumes:
+    pgdata:

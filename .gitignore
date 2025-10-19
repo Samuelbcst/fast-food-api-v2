@@ -1,0 +1,54 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+printdirectory.py
+
+# TypeScript
+dist/
+build/
+*.tsbuildinfo
+
+# Env files 
+.env
+.env.*
+!.env.sample        
+
+# Docker
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Banco de dados 
+*.sqlite
+*.sqlite3
+*.db
+*.pgsql
+pgdata/
+
+# VSCode e IDEs
+.vscode/
+.idea/
+*.swp
+
+# Logs
+logs/
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Testes e coverage
+coverage/
+*.lcov
+
+package-lock.json
+directory_structure.txt
+
+CLAUDE.md
+CLEAN_ARCHITECTURE_REFACTORING_GUIDE.md
+REFACTORING_GUIDE.md
+teste.md
+SOAT-Tech-challenge-Fase2.pdf

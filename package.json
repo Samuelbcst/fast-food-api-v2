@@ -1,0 +1,53 @@
+{
+    "name": "api-scaffold",
+    "version": "1.0.0",
+    "main": "dist/adapter/driver/http/express/index.js",
+    "license": "MIT",
+    "description": "A scaffold for building APIs with TypeScript, Express, Prisma, and Zod",
+    "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+        "@types/express": "^5.0.2",
+        "@types/node": "^22.15.21",
+        "@types/supertest": "^6.0.3",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@types/swagger-ui-express": "^4.1.8",
+        "nodemon": "^3.1.10",
+        "prettier": "^3.6.2",
+        "prisma": "^6.11.1",
+        "supertest": "^7.1.1",
+        "ts-node": "^10.9.2",
+        "tsc": "^2.0.4",
+        "typescript": "^5.8.3",
+        "vitest": "^3.1.4"
+    },
+    "dependencies": {
+        "@prisma/client": "^6.12.0",
+        "dotenv": "^16.5.0",
+        "express": "^5.1.0",
+        "pg": "^8.16.0",
+        "reflect-metadata": "^0.2.2",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
+        "zod": "^3.25.21"
+    },
+    "scripts": {
+        "start": "node dist/adapter/driver/http/express/index.js",
+        "dev": "nodemon --watch src --ext ts,js --exec ts-node src/adapter/driver/http/express/index.ts",
+        "build": "rm -rf dist && tsc",
+        "format": "prettier --write .",
+        "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d database-tools/index.ts",
+        "migration:docker:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d database-tools/index.js",
+        "test": "vitest run",
+        "test:watch": "vitest watch",
+        "e2etest": "docker compose up -d db && vitest run src/adapter/driver/http/express/e2e.test.ts",
+        "compose": "yarn compose:down && yarn build && yarn compose:up",
+        "compose:up": "docker compose up --build",
+        "compose:down": "docker compose down -v",
+        "prisma:g": "prisma generate --no-hints",
+        "prisma:m": "dotenv -e src/.env -- yarn prisma migrate dev",
+        "prisma:s": "dotenv -e src/.env -- yarn prisma studio"
+    },
+    "ts-node": {
+        "esm": true
+    }
+}
