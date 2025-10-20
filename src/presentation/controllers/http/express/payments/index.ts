@@ -4,7 +4,9 @@ import { createPayment } from "./create"
 import { deletePayment } from "./delete"
 import { getPaymentAll } from "./get-all"
 import { getPaymentById } from "./get-by-id"
+import { getPaymentByOrder } from "./get-by-order"
 import { updatePayment } from "./update"
+import { handlePaymentWebhook } from "./webhook"
 
 const paymentRouter = Router()
 
@@ -27,6 +29,30 @@ const paymentRouter = Router()
  *         description: A list of payments.
  */
 paymentRouter.get("/", runExpressEndpoint(getPaymentAll, "get"))
+
+/**
+ * @openapi
+ * /payments/order/{orderId}:
+ *   get:
+ *     tags:
+ *       - payment
+ *     summary: Get payment by order ID
+ *     parameters:
+ *        - name: orderId
+ *          in: path
+ *          required: true
+ *          schema:
+ *              type: number
+ *     responses:
+ *          200:
+ *              description: A payment associated with the order.
+ *          404:
+ *              description: Payment not found for this order.
+ */
+paymentRouter.get(
+    "/order/:orderId",
+    runExpressEndpoint(getPaymentByOrder, "get")
+)
 
 /**
  * @openapi
@@ -63,19 +89,12 @@ paymentRouter.get("/:id", runExpressEndpoint(getPaymentById, "get"))
  *           schema:
  *             type: object
  *             properties:
- *               amount:
- *                 type: number
- *                 required: true
  *               orderId:
  *                 type: number
  *                 required: true
- *               method:
- *                 type: string
- *                 required: true
- *               paymentStatus:
- *                 type: string
- *                 enum: [PAID, NOT_PAID]
- *                 required: true
+ *               amount:
+ *                 type: number
+ *                 description: Optional override for the order total
  *     responses:
  *       201:
  *         description: Payment created.
@@ -83,6 +102,41 @@ paymentRouter.get("/:id", runExpressEndpoint(getPaymentById, "get"))
  *         description: Invalid input.
  */
 paymentRouter.post("/", runExpressEndpoint(createPayment, "post"))
+
+/**
+ * @openapi
+ * /payments/webhook:
+ *   post:
+ *     tags:
+ *       - payment
+ *     summary: Handle payment confirmation webhook
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               orderId:
+ *                 type: number
+ *               status:
+ *                 type: string
+ *                 enum: [APPROVED, REJECTED]
+ *               paidAt:
+ *                 type: string
+ *                 format: date-time
+ *     responses:
+ *       200:
+ *         description: Webhook processed successfully.
+ *       400:
+ *         description: Invalid payload.
+ *       404:
+ *         description: Payment or order not found.
+ */
+paymentRouter.post(
+    "/webhook",
+    runExpressEndpoint(handlePaymentWebhook, "post")
+)
 
 /**
  * @openapi
@@ -110,7 +164,7 @@ paymentRouter.post("/", runExpressEndpoint(createPayment, "post"))
  *                 type: string
  *               paymentStatus:
  *                 type: string
- *                 enum: [PAID, NOT_PAID]
+ *                 enum: [PENDING, APPROVED, REJECTED]
  *     responses:
  *       200:
  *         description: Payment updated.

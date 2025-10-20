@@ -31,9 +31,14 @@ describe("Order Status READY E2E", () => {
             items: [{ productId, quantity: 2 }],
         })
         const orderId = orderRes.body.id
-        await api
-            .post("/api/v1/payments")
-            .send({ orderId, paymentStatus: "PAID" })
+        const paymentRes = await api.post("/api/v1/payments").send({
+            orderId,
+        })
+        const paymentId = paymentRes.body.id
+        await api.put(`/api/v1/payments/${paymentId}`).send({
+            paymentStatus: "APPROVED",
+            paidAt: new Date().toISOString(),
+        })
         await api
             .put(`/api/v1/orders/${orderId}/status`)
             .send({ status: "PREPARING" })

@@ -25,6 +25,11 @@ export class UpdatePaymentUseCase implements UpdatePaymentInputPort {
             return {
                 success: false,
                 result: null,
+                error: new CustomError(
+                    400,
+                    (error as Error | undefined)?.message ||
+                        "Failed to update payment"
+                ),
             }
         }
     }

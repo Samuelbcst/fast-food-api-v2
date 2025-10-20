@@ -2,7 +2,7 @@ import { OrderStatus } from "@entities/order/order"
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaCreateOrderRepository } from "./create-order-repository"
+import { PrismaCreateOrderOutputPort } from "./create-order-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -19,7 +19,14 @@ const mockOrder = {
     totalAmount: 100,
     statusUpdatedAt: new Date(),
     pickupCode: undefined,
-    items: [],
+    items: [
+        {
+            productId: 1,
+            productName: "Burger",
+            unitPrice: 10,
+            quantity: 2,
+        },
+    ],
 }
 const mockCreatedOrder = {
     id: 1,
@@ -29,11 +36,11 @@ const mockCreatedOrder = {
     items: [],
 }
 
-describe("PrismaCreateOrderRepository", () => {
-    let repository: PrismaCreateOrderRepository
+describe("PrismaCreateOrderOutputPort", () => {
+    let repository: PrismaCreateOrderOutputPort
 
     beforeEach(() => {
-        repository = new PrismaCreateOrderRepository()
+        repository = new PrismaCreateOrderOutputPort()
         vi.clearAllMocks()
     })
 
@@ -50,7 +57,16 @@ describe("PrismaCreateOrderRepository", () => {
                 totalAmount: mockOrder.totalAmount,
                 statusUpdatedAt: mockOrder.statusUpdatedAt,
                 pickupCode: mockOrder.pickupCode,
+                items: {
+                    create: mockOrder.items.map((item) => ({
+                        productId: item.productId,
+                        productName: item.productName,
+                        unitPrice: item.unitPrice,
+                        quantity: item.quantity,
+                    })),
+                },
             },
+            include: { items: true },
         })
         expect(result).toEqual({ ...mockCreatedOrder, items: [] })
     })

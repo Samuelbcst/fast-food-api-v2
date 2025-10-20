@@ -1,5 +1,4 @@
-import { Payment } from "@entities/payment/payment"
-import { PaymentStatus } from "@entities/payment/payment-status"
+import { Payment, PaymentStatus } from "@entities/payment/payment"
 
 /**
  * Output Port for updating a payment
@@ -11,7 +10,7 @@ export interface UpdatePaymentOutputPort {
         orderId?: number
         amount?: number
         paymentStatus?: PaymentStatus
-        paidAt?: Date
+        paidAt?: Date | null
     }): Promise<Payment | null>
     finish(): Promise<void>
 }

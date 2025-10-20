@@ -1,22 +1,17 @@
-import { PaymentStatus } from "@entities/payment/payment"
 import { Request } from "express"
 import { z } from "zod"
 import { makeCreatePaymentFactory } from "./make-payment-create-dependencies"
 
 export const createPayment = async ({}, body: Request["body"]) => {
-    const { orderId, amount, paymentStatus, paidAt } = z
+    const { orderId, amount } = z
         .object({
             orderId: z.number().int().positive(),
-            amount: z.number().positive(),
-            paymentStatus: z.nativeEnum(PaymentStatus),
-            paidAt: z.coerce.date().optional(),
+            amount: z.number().positive().optional(),
         })
         .parse(body)
 
     const useCase = await makeCreatePaymentFactory()
-    const input: any = { orderId, amount, paymentStatus }
-    if (paidAt !== undefined) input.paidAt = paidAt
-    const result = await useCase.execute(input)
+    const result = await useCase.execute({ orderId, amount })
     await useCase.onFinish()
     return result
 }

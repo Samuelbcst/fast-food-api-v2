@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@entities/payment/payment"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindPaymentAllUseCase } from "."
@@ -6,8 +7,18 @@ describe("FindPaymentAllUseCase", () => {
     let findPaymentAllRepository: any
     let useCase: FindPaymentAllUseCase
     const mockPayments = [
-        { id: 1, orderId: 1, paymentStatus: "PAID", paidAt: new Date() },
-        { id: 2, orderId: 2, paymentStatus: "NOT_PAID", paidAt: new Date() },
+        {
+            id: 1,
+            orderId: 1,
+            paymentStatus: PaymentStatus.APPROVED,
+            paidAt: new Date(),
+        },
+        {
+            id: 2,
+            orderId: 2,
+            paymentStatus: PaymentStatus.PENDING,
+            paidAt: null,
+        },
     ]
 
     beforeEach(() => {

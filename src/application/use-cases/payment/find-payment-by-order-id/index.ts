@@ -1,0 +1,42 @@
+import { FindPaymentByOrderIdCommand, FindPaymentByOrderIdInputPort } from "@application/ports/input/payment/find-payment-by-order-id-input"
+import { FindPaymentByOrderIdOutputPort } from "@application/ports/output/payment/find-payment-by-order-id-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
+
+export class FindPaymentByOrderIdUseCase
+    implements FindPaymentByOrderIdInputPort
+{
+    constructor(
+        private readonly repository: FindPaymentByOrderIdOutputPort
+    ) {}
+
+    async execute(input: FindPaymentByOrderIdCommand) {
+        try {
+            const payment = await this.repository.execute(input.orderId)
+            if (!payment) {
+                return {
+                    success: false,
+                    result: null,
+                    error: new CustomError(404, "Payment not found for order"),
+                }
+            }
+            return {
+                success: true,
+                result: payment,
+            }
+        } catch (error) {
+            return {
+                success: false,
+                result: null,
+                error: new CustomError(
+                    400,
+                    (error as Error | undefined)?.message ||
+                        "Failed to find payment by order id"
+                ),
+            }
+        }
+    }
+
+    onFinish(): Promise<void> {
+        return this.repository.finish()
+    }
+}

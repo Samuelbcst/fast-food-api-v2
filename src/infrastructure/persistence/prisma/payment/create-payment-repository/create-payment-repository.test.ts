@@ -2,7 +2,7 @@ import { PaymentStatus } from "@entities/payment/payment"
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaCreatePaymentRepository } from "./create-payment-repository"
+import { PrismaCreatePaymentOutputPort } from "./create-payment-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -16,18 +16,18 @@ vi.mock("@libraries/prisma/client", () => ({
 const paymentData = {
     orderId: 1,
     amount: 100,
-    paymentStatus: PaymentStatus.PAID,
-    paidAt: new Date(),
+    paymentStatus: PaymentStatus.PENDING,
+    paidAt: null,
     id: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
 }
 
-describe("PrismaCreatePaymentRepository", () => {
-    let repository: PrismaCreatePaymentRepository
+describe("PrismaCreatePaymentOutputPort", () => {
+    let repository: PrismaCreatePaymentOutputPort
 
     beforeEach(() => {
-        repository = new PrismaCreatePaymentRepository()
+        repository = new PrismaCreatePaymentOutputPort()
         vi.clearAllMocks()
     })
 

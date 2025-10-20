@@ -1,7 +1,8 @@
+import { PaymentStatus } from "@entities/payment/payment"
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaFindPaymentAllRepository } from "./find-payment-all-repository"
+import { PrismaFindPaymentAllOutputPort } from "./find-payment-all-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -12,11 +13,11 @@ vi.mock("@libraries/prisma/client", () => ({
     },
 }))
 
-describe("PrismaFindPaymentAllRepository", () => {
-    let repository: PrismaFindPaymentAllRepository
+describe("PrismaFindPaymentAllOutputPort", () => {
+    let repository: PrismaFindPaymentAllOutputPort
 
     beforeEach(() => {
-        repository = new PrismaFindPaymentAllRepository()
+        repository = new PrismaFindPaymentAllOutputPort()
         vi.clearAllMocks()
     })
 
@@ -25,7 +26,7 @@ describe("PrismaFindPaymentAllRepository", () => {
             {
                 id: 1,
                 orderId: 2,
-                paymentStatus: "PAID",
+                paymentStatus: PaymentStatus.APPROVED,
                 paidAt: new Date(),
                 createdAt: new Date(),
                 updatedAt: new Date(),
@@ -33,7 +34,7 @@ describe("PrismaFindPaymentAllRepository", () => {
             {
                 id: 2,
                 orderId: 3,
-                paymentStatus: "NOT_PAID",
+                paymentStatus: PaymentStatus.PENDING,
                 paidAt: new Date(),
                 createdAt: new Date(),
                 updatedAt: new Date(),

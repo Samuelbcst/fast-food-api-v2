@@ -30,9 +30,9 @@ describe("Payment E2E", () => {
             items: [{ productId, quantity: 2 }],
         })
         const orderId = orderRes.body.id
-        const res = await api
-            .post("/api/v1/payments")
-            .send({ orderId, paymentStatus: "PAID" })
+        const res = await api.post("/api/v1/payments").send({ orderId })
         expect([200, 201]).toContain(res.status)
+        expect(res.body.paymentStatus).toBe("PENDING")
+        expect(res.body.orderId).toBe(orderId)
     })
 })

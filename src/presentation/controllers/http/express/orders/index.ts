@@ -6,6 +6,7 @@ import { getOrderAll } from "./get-all"
 import { getOrderByCustomer } from "./get-by-customer"
 import { getOrderById } from "./get-by-id"
 import { getOrderByStatus } from "./get-by-status"
+import { getOrderStatus } from "./get-status"
 import { updateOrder } from "./update"
 import { updateOrderStatus } from "./update-status"
 
@@ -185,6 +186,27 @@ orderRouter.get(
 )
 
 /**
+ * @openapi
+ * /orders/status/{status}:
+ *   get:
+ *     tags:
+ *       - order
+ *     summary: Get orders by status
+ *     parameters:
+ *        - name: status
+ *          in: path
+ *          required: true
+ *          schema:
+ *              type: string
+ *     responses:
+ *          200:
+ *              description: Orders filtered by status.
+ *          404:
+ *              description: No orders found for this status.
+ */
+orderRouter.get("/status/:status", runExpressEndpoint(getOrderByStatus, "get"))
+
+/**
  * @swagger
  * /orders/{id}/status:
  *   get:
@@ -210,7 +232,7 @@ orderRouter.get(
  *          404:
  *              description: Order not found.
  */
-orderRouter.get("/:id/status", runExpressEndpoint(getOrderByStatus, "get"))
+orderRouter.get("/:id/status", runExpressEndpoint(getOrderStatus, "get"))
 
 /**
  * @openapi
@@ -234,7 +256,7 @@ orderRouter.get("/:id/status", runExpressEndpoint(getOrderByStatus, "get"))
  *             properties:
  *               status:
  *                 type: string
- *                 enum: [pending, processing, completed, cancelled]
+ *                 enum: [RECEIVED, PREPARING, READY, FINISHED]
  *     responses:
  *       200:
  *         description: Order status updated.

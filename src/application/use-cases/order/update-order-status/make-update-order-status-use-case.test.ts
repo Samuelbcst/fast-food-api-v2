@@ -9,7 +9,19 @@ describe("makeUpdateOrderStatusUseCase", () => {
             execute: async () => ({}) as any,
             finish: async () => {},
         }
-        const useCase = makeUpdateOrderStatusUseCase(repository)
+        const findOrderRepo = {
+            execute: async () => ({}),
+            finish: async () => {},
+        }
+        const findPaymentRepo = {
+            execute: async () => ({}),
+            finish: async () => {},
+        }
+        const useCase = makeUpdateOrderStatusUseCase(
+            repository,
+            findOrderRepo as any,
+            findPaymentRepo as any
+        )
         expect(useCase).toBeInstanceOf(UpdateOrderStatusUseCase)
         expect(typeof useCase.execute).toBe("function")
         expect(typeof useCase.onFinish).toBe("function")

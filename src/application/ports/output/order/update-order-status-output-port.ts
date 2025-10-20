@@ -1,5 +1,4 @@
-import { Order } from "@entities/order/order"
-import { OrderStatus } from "@entities/order/order-status"
+import { Order, OrderStatus } from "@entities/order/order"
 
 /**
  * Output Port for updating order status

@@ -1,5 +1,7 @@
 import { PrismaCreateOrderOutputPort } from "./create-order-repository"
 
-export const makeCreateOrderOutputPort = async () => {
+export const makeCreateOrderRepository = async () => {
     return new PrismaCreateOrderOutputPort()
 }
+
+export const makeCreateOrderOutputPort = makeCreateOrderRepository

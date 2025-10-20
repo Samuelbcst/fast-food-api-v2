@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@entities/payment/payment"
 import { CustomError } from "@use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -9,7 +10,7 @@ describe("FindPaymentByIdUseCase", () => {
     const mockPayment = {
         id: 1,
         orderId: 1,
-        paymentStatus: "PAID",
+        paymentStatus: PaymentStatus.APPROVED,
         paidAt: new Date(),
     }
 

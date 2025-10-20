@@ -4,10 +4,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { PrismaUpdateOrderRepository } from "./update-order-repository"
 
-// Fallback for missing enum values in OrderStatus
-const PAID = (OrderStatus as any).PAID || "PAID"
-const CANCELLED = (OrderStatus as any).CANCELLED || "CANCELLED"
-
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
         order: {
@@ -79,7 +75,7 @@ describe("PrismaUpdateOrderRepository", () => {
         const updatedOrder = {
             ...mockOrder,
             customerId: 2,
-            status: PAID,
+            status: OrderStatus.PREPARING,
             statusUpdatedAt: now,
             totalAmount: 200,
             pickupCode: "XYZ",
@@ -90,7 +86,7 @@ describe("PrismaUpdateOrderRepository", () => {
             id: 1,
             customerId: 2,
             items,
-            status: PAID,
+            status: OrderStatus.PREPARING,
             statusUpdatedAt: now,
             totalAmount: 200,
             pickupCode: "XYZ",
@@ -99,7 +95,7 @@ describe("PrismaUpdateOrderRepository", () => {
             where: { id: 1 },
             data: expect.objectContaining({
                 customerId: 2,
-                status: PAID,
+                status: OrderStatus.PREPARING,
                 statusUpdatedAt: now,
                 totalAmount: 200,
                 pickupCode: "XYZ",
@@ -113,13 +109,16 @@ describe("PrismaUpdateOrderRepository", () => {
 
     it("should only update provided fields (no items)", async () => {
         ;(prisma.order.findUnique as any).mockResolvedValue({ ...mockOrder })
-        const updatedOrder = { ...mockOrder, status: CANCELLED }
+        const updatedOrder = { ...mockOrder, status: OrderStatus.FINISHED }
         ;(prisma.order.update as any).mockResolvedValue(updatedOrder)
-        const result = await repository.execute({ id: 1, status: CANCELLED })
+        const result = await repository.execute({
+            id: 1,
+            status: OrderStatus.FINISHED,
+        })
         expect(prisma.order.update).toHaveBeenCalledWith({
             where: { id: 1 },
             data: expect.objectContaining({
-                status: CANCELLED,
+                status: OrderStatus.FINISHED,
                 updatedAt: expect.any(Date),
             }),
             include: { items: true },

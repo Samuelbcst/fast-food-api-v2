@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import * as makePaymentFactory from "./make-payment-create-dependencies"
-import { PaymentStatus } from "@entities/payment/payment"
 import { createPayment } from "./index"
 
 const mockUseCase = {
@@ -18,42 +17,34 @@ describe("createPayment", () => {
     })
 
     it("creates payment with valid input and returns result", async () => {
-        const now = new Date()
-        vi.useFakeTimers().setSystemTime(now)
         mockUseCase.execute.mockResolvedValue("payment-result")
         const body = {
             orderId: 1,
-            paymentStatus: PaymentStatus.PAID,
-            paidAt: now,
+            amount: 100,
         }
         const result = await createPayment({}, body)
         expect(makePaymentFactory.makeCreatePaymentFactory).toHaveBeenCalled()
         expect(mockUseCase.execute).toHaveBeenCalledWith({
             orderId: 1,
-            paymentStatus: PaymentStatus.PAID,
-            paidAt: now,
+            amount: 100,
         })
         expect(mockUseCase.onFinish).toHaveBeenCalled()
         expect(result).toBe("payment-result")
-        vi.useRealTimers()
     })
 
-    it("creates payment without paidAt", async () => {
+    it("creates payment using order total when amount omitted", async () => {
         mockUseCase.execute.mockResolvedValue("payment-result")
-        // Use a valid PaymentStatus value that exists in your enum
-        const validStatus = Object.values(PaymentStatus)[0]
-        const body = { orderId: 1, paymentStatus: validStatus }
+        const body = { orderId: 1 }
         const result = await createPayment({}, body)
         expect(mockUseCase.execute).toHaveBeenCalledWith({
             orderId: 1,
-            paymentStatus: validStatus,
         })
         expect(result).toBe("payment-result")
     })
 
     it("throws if input is invalid", async () => {
         await expect(
-            createPayment({}, { orderId: "bad", paymentStatus: "bad" })
+            createPayment({}, { orderId: "bad", amount: "bad" })
         ).rejects.toThrow()
         expect(
             makePaymentFactory.makeCreatePaymentFactory

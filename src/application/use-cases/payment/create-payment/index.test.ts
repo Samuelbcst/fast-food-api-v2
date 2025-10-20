@@ -7,12 +7,13 @@ import { CreatePaymentUseCase } from "."
 const input = {
     orderId: 1,
     amount: 100.0,
-    paymentStatus: PaymentStatus.NOT_PAID,
-    paidAt: new Date(),
 }
 const payment = {
     id: 1,
-    ...input,
+    orderId: 1,
+    amount: 100.0,
+    paymentStatus: PaymentStatus.PENDING,
+    paidAt: null,
     createdAt: new Date(),
     updatedAt: new Date(),
 }
@@ -40,6 +41,14 @@ describe("CreatePaymentUseCase", () => {
         expect(repository.create).toHaveBeenCalled()
         expect(result.success).toBe(true)
         expect(result.result).toEqual(payment)
+        expect(repository.create).toHaveBeenCalledWith(
+            expect.objectContaining({
+                orderId: input.orderId,
+                amount: input.amount,
+                paymentStatus: PaymentStatus.PENDING,
+                paidAt: null,
+            })
+        )
     })
 
     it("should return error if repository throws", async () => {
@@ -74,6 +83,28 @@ describe("CreatePaymentUseCase", () => {
         expect(result.error?.message).toBe(
             "Payment amount must match order total"
         )
+    })
+
+    it("should infer order total when amount not provided", async () => {
+        const result = await useCase.execute({ orderId: 1 })
+        expect(result.success).toBe(true)
+        expect(result.result).toEqual(payment)
+        expect(repository.create).toHaveBeenCalledWith(
+            expect.objectContaining({
+                amount: order.totalAmount,
+            })
+        )
+    })
+
+    it("should return error when inferred amount is zero", async () => {
+        findOrderByIdRepository.execute = vi
+            .fn()
+            .mockResolvedValue({ id: 1, totalAmount: 0 })
+        useCase = new CreatePaymentUseCase(repository, findOrderByIdRepository)
+        const result = await useCase.execute({ orderId: 1 })
+        expect(result.success).toBe(false)
+        expect(result.error).toBeInstanceOf(CustomError)
+        expect(result.error?.message).toContain("greater than zero")
     })
 
     it("should call finish on onFinish", async () => {

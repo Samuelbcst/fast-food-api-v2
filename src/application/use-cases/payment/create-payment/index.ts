@@ -23,7 +23,18 @@ export class CreatePaymentUseCase implements CreatePaymentInputPort {
                 }
             }
 
-            if (Number(input.amount) !== Number(order.totalAmount)) {
+            const amount =
+                input.amount !== undefined ? Number(input.amount) : Number(order.totalAmount)
+
+            if (Number.isNaN(amount) || amount <= 0) {
+                return {
+                    success: false,
+                    result: null,
+                    error: new CustomError(400, "Payment amount must be greater than zero"),
+                }
+            }
+
+            if (Number(amount) !== Number(order.totalAmount)) {
                 return {
                     success: false,
                     result: null,
@@ -34,14 +45,11 @@ export class CreatePaymentUseCase implements CreatePaymentInputPort {
                 }
             }
 
-            const paymentStatus =
-                input.paymentStatus === PaymentStatus.PAID &&
-                Number(input.amount) === Number(order.totalAmount)
-                    ? PaymentStatus.PAID
-                    : PaymentStatus.NOT_PAID
             const created = await this.createPaymentOutputPort.create({
-                ...input,
-                paymentStatus,
+                orderId: order.id,
+                amount,
+                paymentStatus: PaymentStatus.PENDING,
+                paidAt: null,
             })
             return {
                 success: true,

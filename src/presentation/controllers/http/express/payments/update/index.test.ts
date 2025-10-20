@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@entities/payment/payment"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import * as factory from "./make-payment-update-dependencies"
 import { updatePayment } from "./index"
@@ -18,12 +19,13 @@ describe("updatePayment", () => {
     it("updates payment with valid input and returns result", async () => {
         mockUseCase.execute.mockResolvedValue("payment-result")
         const params = { id: "1" }
-        const body = { paymentStatus: "PAID" }
+        const body = { paymentStatus: PaymentStatus.APPROVED, amount: 25 }
         const result = await updatePayment(params, body)
         expect(factory.makeUpdatePaymentFactory).toHaveBeenCalled()
         expect(mockUseCase.execute).toHaveBeenCalledWith({
             id: 1,
-            status: "PAID",
+            paymentStatus: PaymentStatus.APPROVED,
+            amount: 25,
         })
         expect(mockUseCase.onFinish).toHaveBeenCalled()
         expect(result).toBe("payment-result")
@@ -37,7 +39,6 @@ describe("updatePayment", () => {
         expect(factory.makeUpdatePaymentFactory).toHaveBeenCalled()
         expect(mockUseCase.execute).toHaveBeenCalledWith({
             id: 1,
-            status: undefined,
         })
         expect(result).toBe("payment-result")
     })

@@ -9,7 +9,11 @@ describe("makeCreateOrderUseCase", () => {
             create: async () => ({}) as any,
             finish: async () => {},
         }
-        const useCase = makeCreateOrderUseCase(repository)
+        const productRepository = {
+            execute: async () => ({}),
+            finish: async () => {},
+        }
+        const useCase = makeCreateOrderUseCase(repository, productRepository)
         expect(useCase).toBeInstanceOf(CreateOrderUseCase)
         expect(typeof useCase.execute).toBe("function")
         expect(typeof useCase.onFinish).toBe("function")

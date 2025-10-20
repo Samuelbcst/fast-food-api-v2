@@ -1,3 +1,4 @@
+import { OrderStatus } from "@entities/order/order"
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -25,7 +26,7 @@ describe("PrismaFindOrderByCustomerRepository", () => {
             {
                 id: 1,
                 customerId: 1,
-                status: "RECEIVED",
+                status: OrderStatus.RECEIVED,
                 totalAmount: 100,
                 statusUpdatedAt: new Date(),
                 createdAt: new Date(),
@@ -36,7 +37,7 @@ describe("PrismaFindOrderByCustomerRepository", () => {
             {
                 id: 2,
                 customerId: 1,
-                status: "PAID",
+                status: OrderStatus.READY,
                 totalAmount: 200,
                 statusUpdatedAt: new Date(),
                 createdAt: new Date(),

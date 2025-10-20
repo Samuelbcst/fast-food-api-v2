@@ -1,8 +1,14 @@
-import { Order } from "@entities/order/order"
 import { UseCase } from "@application/use-cases/base-use-case"
-import { BaseEntity } from "@entities/base-entity"
 
-export interface CreateOrderCommand extends Omit<Order, keyof BaseEntity> {}
+export interface CreateOrderItemCommand {
+    productId: number
+    quantity: number
+}
+
+export interface CreateOrderCommand {
+    customerId?: number
+    items: CreateOrderItemCommand[]
+}
 
 export interface CreateOrderInputPort
-    extends UseCase<CreateOrderCommand, Order> {}
+    extends UseCase<CreateOrderCommand, { id: number }> {}

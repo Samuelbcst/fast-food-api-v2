@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@entities/payment/payment"
 import { CustomError } from "@use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -7,7 +8,7 @@ describe("UpdatePaymentUseCase", () => {
     const mockPayment = {
         id: 1,
         orderId: 1,
-        paymentStatus: "PAID",
+        paymentStatus: PaymentStatus.APPROVED,
         paidAt: new Date(),
     }
     let updatePaymentRepository: any
@@ -26,12 +27,12 @@ describe("UpdatePaymentUseCase", () => {
         const result = await useCase.execute({
             id: 1,
             amount: 100,
-            status: "PAID",
+            paymentStatus: PaymentStatus.APPROVED,
         })
         expect(updatePaymentRepository.execute).toHaveBeenCalledWith({
             id: 1,
             amount: 100,
-            status: "PAID",
+            paymentStatus: PaymentStatus.APPROVED,
         })
         expect(result.success).toBe(true)
         expect(result.result).toEqual(mockPayment)
@@ -52,7 +53,8 @@ describe("UpdatePaymentUseCase", () => {
         const result = await useCase.execute({ id: 1 })
         expect(result.success).toBe(false)
         expect(result.result).toBeNull()
-        expect(result.error).toBeUndefined()
+        expect(result.error).toBeInstanceOf(CustomError)
+        expect(result.error?.message).toBe("DB error")
     })
 
     it("should call finish on onFinish", async () => {

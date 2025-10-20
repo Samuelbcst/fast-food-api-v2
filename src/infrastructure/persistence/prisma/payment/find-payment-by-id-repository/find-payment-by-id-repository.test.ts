@@ -1,3 +1,4 @@
+import { PaymentStatus } from "@entities/payment/payment"
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -24,7 +25,7 @@ describe("PrismaFindPaymentByIdRepository", () => {
         const fakePayment = {
             id: 1,
             orderId: 2,
-            paymentStatus: "PAID",
+            paymentStatus: PaymentStatus.APPROVED,
             paidAt: new Date(),
             createdAt: new Date(),
             updatedAt: new Date(),

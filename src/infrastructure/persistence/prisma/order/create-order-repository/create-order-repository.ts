@@ -1,11 +1,10 @@
-import { CreateOrderOutputPort } from "@application/ports/output/order/create-order-output-port"
+import { CreateOrderOutputPort, CreateOrderPersistenceInput } from "@application/ports/output/order/create-order-output-port"
 import { Order } from "@entities/order/order"
 import { prisma } from "@libraries/prisma/client"
-import { BaseEntity } from "@src/domain/entities/base-entity"
 
 export class PrismaCreateOrderOutputPort implements CreateOrderOutputPort {
-    async create(input: Omit<Order, keyof BaseEntity>): Promise<Order> {
-        const { customerId, status, totalAmount, statusUpdatedAt, pickupCode } =
+    async create(input: CreateOrderPersistenceInput): Promise<Order> {
+        const { customerId, status, totalAmount, statusUpdatedAt, pickupCode, items } =
             input
         const order = await prisma.order.create({
             data: {
@@ -14,12 +13,20 @@ export class PrismaCreateOrderOutputPort implements CreateOrderOutputPort {
                 totalAmount,
                 statusUpdatedAt,
                 pickupCode,
+                items: {
+                    create: items.map((item) => ({
+                        productId: item.productId,
+                        productName: item.productName,
+                        unitPrice: item.unitPrice,
+                        quantity: item.quantity,
+                    })),
+                },
             },
+            include: { items: true },
         })
-        // Return with items as empty array (since not created here)
         return {
             ...order,
-            items: [],
+            items: order.items ?? [],
         } as Order
     }
 
