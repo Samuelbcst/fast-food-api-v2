@@ -1,11 +1,6 @@
 import { UseCaseResult } from "@application/use-cases/use-case-result"
 import { Product } from "@entities/product/product"
-import {
-    ErrorResponse,
-    PresentationResponse,
-    Presenter,
-    SuccessResponse,
-} from "./presenter"
+import { PresentationResponse, Presenter } from "./presenter"
 
 /**
  * Product view model
@@ -15,7 +10,7 @@ export interface ProductViewModel {
     name: string
     description?: string
     price: number
-    categoryId: number
+    categoryId: string | number
     active?: boolean
     createdAt?: Date
     updatedAt?: Date

@@ -5,16 +5,15 @@ import { FindCategoryByIdOutputPort } from "@application/ports/output/category/f
 export class PrismaFindCategoryByIdRepository
     implements FindCategoryByIdOutputPort
 {
-    async execute(id: Category["id"]): Promise<Category | null> {
+    async execute(id: number): Promise<Category | null> {
         const category = await prisma.category.findUnique({ where: { id } })
         if (!category) return null
-        return {
-            ...category,
-            description:
-                category.description === null
-                    ? undefined
-                    : category.description,
-        }
+        return new Category(
+            category.id.toString(),
+            category.name,
+            category.description ?? "",
+            false
+        )
     }
 
     async finish() {

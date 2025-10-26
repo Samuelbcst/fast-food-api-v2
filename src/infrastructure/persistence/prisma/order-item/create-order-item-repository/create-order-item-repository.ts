@@ -1,5 +1,4 @@
 import { CreateOrderItemOutputPort } from "@application/ports/output/order-item/create-order-item-output-port"
-import { BaseEntity } from "@entities/base-entity"
 import { OrderItem } from "@entities/order-item/order-item"
 import { prisma } from "@libraries/prisma/client"
 
@@ -7,12 +6,25 @@ export class PrismaCreateOrderItemOutputPort
     implements CreateOrderItemOutputPort
 {
     async create(
-        orderItem: Omit<OrderItem, keyof BaseEntity>
+        orderItem: {
+            orderId: number
+            productId: number
+            productName: string
+            unitPrice: number
+            quantity: number
+        }
     ): Promise<OrderItem> {
-        const created = await prisma.orderItem.create({
-            data: orderItem,
-        })
-        return created as OrderItem
+        const created = await prisma.orderItem.create({ data: orderItem })
+        // Rehydrate domain OrderItem (db ids -> string ids)
+        return new OrderItem(
+            created.id.toString(),
+            created.orderId.toString(),
+            created.productId.toString(),
+            created.productName,
+            created.unitPrice,
+            created.quantity,
+            false
+        )
     }
 
     async finish(): Promise<void> {

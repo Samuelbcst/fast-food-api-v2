@@ -5,6 +5,7 @@ import { Customer } from "@entities/customer/customer"
  * Defines the contract that infrastructure adapters must implement
  */
 export interface FindCustomerByIdOutputPort {
+    // Adapter boundary uses DB numeric id
     execute(id: number): Promise<Customer | null>
     finish(): Promise<void>
 }

@@ -7,13 +7,15 @@ export class PrismaFindCategoryAllRepository
 {
     async execute(): Promise<Category[]> {
         const categories = await prisma.category.findMany()
-        return categories.map((category) => ({
-            ...category,
-            description:
-                category.description === null
-                    ? undefined
-                    : category.description,
-        }))
+        // Rehydrate rich domain Category instances from DB rows
+        return categories.map((c) =>
+            new Category(
+                c.id.toString(),
+                c.name,
+                c.description ?? "",
+                false
+            )
+        )
     }
 
     async finish() {

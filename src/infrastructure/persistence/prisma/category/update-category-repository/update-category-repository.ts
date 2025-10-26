@@ -6,9 +6,9 @@ export class PrismaUpdateCategoryRepository
     implements UpdateCategoryOutputPort
 {
     async execute(param: {
-        id: Category["id"]
-        name?: Category["name"]
-        description?: Category["description"]
+        id: number
+        name?: string
+        description?: string
     }): Promise<Category | null> {
         const { id, name, description } = param
         const category = await prisma.category.findUnique({ where: { id } })
@@ -18,19 +18,16 @@ export class PrismaUpdateCategoryRepository
             data: {
                 name: name !== undefined ? name : category.name,
                 description:
-                    description !== undefined
-                        ? description
-                        : category.description,
+                    description !== undefined ? description : category.description,
                 updatedAt: new Date(),
             },
         })
-        return {
-            ...updatedCategory,
-            description:
-                updatedCategory.description === null
-                    ? undefined
-                    : updatedCategory.description,
-        }
+        return new Category(
+            updatedCategory.id.toString(),
+            updatedCategory.name,
+            updatedCategory.description ?? "",
+            false
+        )
     }
 
     async finish() {

@@ -9,13 +9,12 @@ export class PrismaDeleteCategoryRepository
         const category = await prisma.category.findUnique({ where: { id } })
         if (!category) return null
         await prisma.category.delete({ where: { id } })
-        return {
-            ...category,
-            description:
-                category.description === null
-                    ? undefined
-                    : category.description,
-        }
+        return new Category(
+            category.id.toString(),
+            category.name,
+            category.description ?? "",
+            false
+        )
     }
 
     async finish() {

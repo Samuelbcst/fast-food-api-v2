@@ -5,3 +5,5 @@ export const makeCreateOrderRepository = async () => {
 }
 
 export const makeCreateOrderOutputPort = makeCreateOrderRepository
+// Backwards-compatible alias
+export const makeCreateOrderRepositoryAlias = makeCreateOrderOutputPort

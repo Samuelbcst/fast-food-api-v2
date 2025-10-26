@@ -6,6 +6,13 @@ import { Product } from "@entities/product/product"
  * Defines the contract that infrastructure adapters must implement
  */
 export interface CreateProductOutputPort {
-    create(input: Omit<Product, keyof BaseEntity>): Promise<Product>
+    // Use DB-shaped create input (categoryId as number) at the persistence boundary.
+    create(input: {
+        name: string
+        description?: string | null
+        price: number
+        categoryId: number
+        active?: boolean | null
+    }): Promise<Product>
     finish(): Promise<void>
 }

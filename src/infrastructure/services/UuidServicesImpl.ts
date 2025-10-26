@@ -9,3 +9,7 @@ export class UuidServiceImpl implements UUIDService {
         return uuidValidate(id)
     }
 }
+
+// Export alias for backward compatibility with existing imports that expect
+// the name `UuidServicesImpl` (plural). Some tests/modules import that name.
+export { UuidServiceImpl as UuidServicesImpl }

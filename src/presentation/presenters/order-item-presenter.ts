@@ -1,19 +1,14 @@
 import { UseCaseResult } from "@application/use-cases/use-case-result"
 import { OrderItem } from "@entities/order-item/order-item"
-import {
-    ErrorResponse,
-    PresentationResponse,
-    Presenter,
-    SuccessResponse,
-} from "./presenter"
+import { PresentationResponse, Presenter } from "./presenter"
 
 /**
  * OrderItem view model
  */
 export interface OrderItemViewModel {
     id: string | number
-    orderId: number
-    productId: number
+    orderId: string | number
+    productId: string | number
     productName: string
     unitPrice: number
     quantity: number

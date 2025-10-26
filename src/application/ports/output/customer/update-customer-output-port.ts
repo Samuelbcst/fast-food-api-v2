@@ -7,9 +7,9 @@ import { Customer } from "@entities/customer/customer"
 export interface UpdateCustomerOutputPort {
     execute(input: {
         id: number
-        name?: string
-        email?: string
-        cpf?: string
+        name?: Customer["name"]
+        email?: Customer["email"]
+        cpf?: Customer["cpf"]
     }): Promise<Customer | null>
     finish(): Promise<void>
 }

@@ -1,21 +1,16 @@
 import { UseCaseResult } from "@application/use-cases/use-case-result"
 import { Payment, PaymentStatus } from "@entities/payment/payment"
-import {
-    ErrorResponse,
-    PresentationResponse,
-    Presenter,
-    SuccessResponse,
-} from "./presenter"
+import { PresentationResponse, Presenter } from "./presenter"
 
 /**
  * Payment view model
  */
 export interface PaymentViewModel {
     id: string | number
-    orderId: number
+    orderId: string | number
     amount: number
     paymentStatus: PaymentStatus
-    paidAt: Date
+    paidAt?: Date | null
     createdAt?: Date
     updatedAt?: Date
 }

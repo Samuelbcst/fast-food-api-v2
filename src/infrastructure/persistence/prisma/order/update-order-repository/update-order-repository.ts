@@ -1,26 +1,24 @@
 import { UpdateOrderOutputPort } from "@application/ports/output/order/update-order-output-port"
-import { Order } from "@entities/order/order"
+import { Order, OrderStatus } from "@entities/order/order"
+import { OrderItem } from "@entities/order-item/order-item"
 import { prisma } from "@libraries/prisma/client"
 
 export class PrismaUpdateOrderOutputPort implements UpdateOrderOutputPort {
-    async execute(param: {
-        id: Order["id"]
-        customerId?: Order["customerId"]
-        items?: Order["items"]
-        status?: Order["status"]
-        statusUpdatedAt?: Order["statusUpdatedAt"]
-        totalAmount?: Order["totalAmount"]
-        pickupCode?: Order["pickupCode"]
+    async execute(input: {
+        id: number
+        customerId?: number
+        totalAmount?: number
+        pickupCode?: string
+        // optional DB-shaped items for replace
+        items?: Array<{
+            productId: number
+            productName: string
+            unitPrice: number
+            quantity: number
+        }>
     }): Promise<Order | null> {
-        const {
-            id,
-            customerId,
-            items,
-            status,
-            statusUpdatedAt,
-            totalAmount,
-            pickupCode,
-        } = param
+        const { id, customerId, items, totalAmount, pickupCode } = input
+
         // Find the order first
         const order = await prisma.order.findUnique({
             where: { id },
@@ -31,9 +29,6 @@ export class PrismaUpdateOrderOutputPort implements UpdateOrderOutputPort {
         // Prepare update data
         const updateData: any = { updatedAt: new Date() }
         if (customerId !== undefined) updateData.customerId = customerId
-        if (status !== undefined) updateData.status = status
-        if (statusUpdatedAt !== undefined)
-            updateData.statusUpdatedAt = statusUpdatedAt
         if (totalAmount !== undefined) updateData.totalAmount = totalAmount
         if (pickupCode !== undefined) updateData.pickupCode = pickupCode
 
@@ -58,7 +53,29 @@ export class PrismaUpdateOrderOutputPort implements UpdateOrderOutputPort {
                 include: { items: true },
             })
         }
-        return { ...updatedOrder, items: updatedOrder.items ?? [] } as Order
+
+        const domainItems = (updatedOrder.items ?? []).map(
+            (it) =>
+                new OrderItem(
+                    it.id.toString(),
+                    it.orderId.toString(),
+                    it.productId.toString(),
+                    it.productName,
+                    it.unitPrice,
+                    it.quantity,
+                    false
+                )
+        )
+
+        return new Order(
+            updatedOrder.id.toString(),
+            updatedOrder.customerId?.toString() ?? undefined,
+            domainItems,
+            (updatedOrder.status as unknown) as OrderStatus,
+            updatedOrder.totalAmount,
+            updatedOrder.pickupCode ?? undefined,
+            false
+        )
     }
 
     async finish(): Promise<void> {

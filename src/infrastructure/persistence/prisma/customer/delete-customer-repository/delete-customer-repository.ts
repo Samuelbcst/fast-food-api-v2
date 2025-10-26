@@ -9,7 +9,13 @@ export class PrismaDeleteCustomerRepository
         const customer = await prisma.customer.findUnique({ where: { id } })
         if (!customer) return null
         await prisma.customer.delete({ where: { id } })
-        return customer
+        return new Customer(
+            customer.id.toString(),
+            customer.name,
+            customer.email,
+            customer.cpf,
+            false
+        )
     }
 
     finish() {

@@ -6,7 +6,10 @@ export class PrismaFindCustomerAllRepository
     implements FindCustomerAllOutputPort
 {
     async execute(): Promise<Customer[]> {
-        return prisma.customer.findMany()
+        const rows = await prisma.customer.findMany()
+        return rows.map((r) =>
+            new Customer(r.id.toString(), r.name, r.email, r.cpf, false)
+        )
     }
 
     finish() {

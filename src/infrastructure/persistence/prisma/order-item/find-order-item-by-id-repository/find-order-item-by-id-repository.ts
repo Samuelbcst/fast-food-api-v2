@@ -5,9 +5,18 @@ import { prisma } from "@libraries/prisma/client"
 export class PrismaFindOrderItemByIdOutputPort
     implements FindOrderItemByIdOutputPort
 {
-    async execute(id: OrderItem["id"]): Promise<OrderItem | null> {
+    async execute(id: number): Promise<OrderItem | null> {
         const item = await prisma.orderItem.findUnique({ where: { id } })
-        return item as OrderItem | null
+        if (!item) return null
+        return new OrderItem(
+            item.id.toString(),
+            item.orderId.toString(),
+            item.productId.toString(),
+            item.productName,
+            item.unitPrice,
+            item.quantity,
+            false
+        )
     }
 
     async finish(): Promise<void> {

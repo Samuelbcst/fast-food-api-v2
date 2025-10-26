@@ -9,7 +9,17 @@ export class PrismaFindProductByCategoryOutputPort
         const products = await prisma.product.findMany({
             where: { categoryId },
         })
-        return products as Product[]
+        return products.map((p) =>
+            new Product(
+                p.id.toString(),
+                p.name,
+                p.description ?? undefined,
+                p.price,
+                p.categoryId.toString(),
+                p.active ?? undefined,
+                false
+            )
+        )
     }
 
     async finish(): Promise<void> {

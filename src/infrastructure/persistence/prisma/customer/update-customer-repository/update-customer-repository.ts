@@ -6,7 +6,7 @@ export class PrismaUpdateCustomerRepository
     implements UpdateCustomerOutputPort
 {
     async execute(param: {
-        id: Customer["id"]
+        id: number
         name?: Customer["name"]
         email?: Customer["email"]
         cpf?: Customer["cpf"]
@@ -15,14 +15,16 @@ export class PrismaUpdateCustomerRepository
         // Find the customer first
         const customer = await prisma.customer.findUnique({ where: { id } })
         if (!customer) return null
-        const data: Partial<Customer> = {}
+
+    const data: Record<string, unknown> = {}
         if (name !== undefined) data.name = name
         if (email !== undefined) data.email = email
         if (cpf !== undefined) data.cpf = cpf
-        // Always update updatedAt
-        data.updatedAt = new Date()
-        const updated = await prisma.customer.update({ where: { id }, data })
-        return updated
+
+        const updated = await prisma.customer.update({ where: { id: customer.id }, data })
+
+        // Reconstruct domain entity
+        return new Customer(updated.id.toString(), updated.name, updated.email, updated.cpf, false)
     }
 
     finish() {

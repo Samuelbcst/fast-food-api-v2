@@ -6,11 +6,11 @@ export class PrismaUpdateOrderItemOutputPort
     implements UpdateOrderItemOutputPort
 {
     async execute(param: {
-        id: OrderItem["id"]
-        quantity?: OrderItem["quantity"]
-        price?: OrderItem["unitPrice"]
-        orderId?: OrderItem["orderId"]
-        productId?: OrderItem["productId"]
+        id: number
+        quantity?: number
+        price?: number
+        orderId?: number
+        productId?: number
     }): Promise<OrderItem | null> {
         const { id, quantity, price, orderId, productId } = param
         const orderItem = await prisma.orderItem.findUnique({ where: { id } })
@@ -20,11 +20,16 @@ export class PrismaUpdateOrderItemOutputPort
         if (price !== undefined) updateData.unitPrice = price
         if (orderId !== undefined) updateData.orderId = orderId
         if (productId !== undefined) updateData.productId = productId
-        const updated = await prisma.orderItem.update({
-            where: { id },
-            data: updateData,
-        })
-        return updated as OrderItem
+        const updated = await prisma.orderItem.update({ where: { id }, data: updateData })
+        return new OrderItem(
+            updated.id.toString(),
+            updated.orderId.toString(),
+            updated.productId.toString(),
+            updated.productName,
+            updated.unitPrice,
+            updated.quantity,
+            false
+        )
     }
 
     async finish(): Promise<void> {

@@ -7,7 +7,17 @@ export class PrismaFindOrderItemAllOutputPort
 {
     async execute(): Promise<OrderItem[]> {
         const items = await prisma.orderItem.findMany()
-        return items as OrderItem[]
+        return items.map((i) =>
+            new OrderItem(
+                i.id.toString(),
+                i.orderId.toString(),
+                i.productId.toString(),
+                i.productName,
+                i.unitPrice,
+                i.quantity,
+                false
+            )
+        )
     }
 
     async finish(): Promise<void> {

@@ -9,7 +9,15 @@ export class PrismaDeleteOrderItemOutputPort
         const orderItem = await prisma.orderItem.findUnique({ where: { id } })
         if (!orderItem) return null
         await prisma.orderItem.delete({ where: { id } })
-        return orderItem as OrderItem
+        return new OrderItem(
+            orderItem.id.toString(),
+            orderItem.orderId.toString(),
+            orderItem.productId.toString(),
+            orderItem.productName,
+            orderItem.unitPrice,
+            orderItem.quantity,
+            false
+        )
     }
 
     async finish(): Promise<void> {

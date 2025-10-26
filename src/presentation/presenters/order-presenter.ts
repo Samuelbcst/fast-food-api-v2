@@ -1,24 +1,19 @@
 import { UseCaseResult } from "@application/use-cases/use-case-result"
 import { Order, OrderStatus } from "@entities/order/order"
-import {
-    ErrorResponse,
-    PresentationResponse,
-    Presenter,
-    SuccessResponse,
-} from "./presenter"
+import { PresentationResponse, Presenter } from "./presenter"
 
 /**
  * Order view model
  */
 export interface OrderViewModel {
     id: string | number
-    customerId?: number
+    customerId?: string | number
     status: OrderStatus
     totalAmount: number
     pickupCode?: string
     createdAt?: Date
     updatedAt?: Date
-    statusUpdatedAt: Date
+    statusUpdatedAt?: Date
 }
 
 /**
@@ -41,7 +36,6 @@ export class OrderPresenter
                     pickupCode: order.pickupCode,
                     // createdAt: omitted (infrastructure concern)
                     // updatedAt: omitted (infrastructure concern)
-                    statusUpdatedAt: order.statusUpdatedAt,
                 },
                 statusCode: 200,
             }
@@ -76,7 +70,6 @@ export class OrderListPresenter
                     pickupCode: o.pickupCode,
                     // createdAt: omitted (infrastructure concern)
                     // updatedAt: omitted (infrastructure concern)
-                    statusUpdatedAt: o.statusUpdatedAt,
                 })),
                 statusCode: 200,
             }

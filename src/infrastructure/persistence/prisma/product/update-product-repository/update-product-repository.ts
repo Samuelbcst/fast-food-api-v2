@@ -4,11 +4,11 @@ import { UpdateProductOutputPort } from "@application/ports/output/product/updat
 
 export class PrismaUpdateProductOutputPort implements UpdateProductOutputPort {
     async execute(param: {
-        id: Product["id"]
-        name?: Product["name"]
-        description?: Product["description"]
-        price?: Product["price"]
-        categoryId?: Product["categoryId"]
+        id: number
+        name?: string
+        description?: string
+        price?: number
+        categoryId?: number
     }): Promise<Product | null> {
         const { id, name, description, price, categoryId } = param
         const product = await prisma.product.findUnique({ where: { id } })
@@ -22,7 +22,15 @@ export class PrismaUpdateProductOutputPort implements UpdateProductOutputPort {
             where: { id },
             data: updateData,
         })
-        return updated as Product
+        return new Product(
+            updated.id.toString(),
+            updated.name,
+            updated.description ?? undefined,
+            updated.price,
+            updated.categoryId.toString(),
+            updated.active ?? undefined,
+            false
+        )
     }
 
     async finish(): Promise<void> {
