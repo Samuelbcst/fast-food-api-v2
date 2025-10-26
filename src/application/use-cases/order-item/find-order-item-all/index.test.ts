@@ -1,10 +1,10 @@
-import type { FindOrderItemAllRepository } from "@src/application/repositories/order-item/find-order-item-all"
+import type { FindOrderItemAllOutputPort } from "@application/ports/output/order-item/find-order-item-all-output-port"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindOrderItemAllUseCase } from "."
 
 describe("FindOrderItemAllUseCase", () => {
-    let repository: FindOrderItemAllRepository
+    let repository: FindOrderItemAllOutputPort
     let useCase: FindOrderItemAllUseCase
     const orderItems = [
         {

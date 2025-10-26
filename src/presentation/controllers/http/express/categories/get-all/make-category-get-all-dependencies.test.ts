@@ -1,5 +1,5 @@
 import * as repoModule from "@persistence/prisma/category/find-category-all-repository/make-find-category-all-repository"
-import * as useCaseModule from "@use-cases/category/find-category-all/make-find-category-all-use-case"
+import * as useCaseModule from "@application/use-cases/category/find-category-all/make-find-category-all-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeGetCategoryAllFactory } from "./make-category-get-all-dependencies"
@@ -11,7 +11,7 @@ vi.mock(
     })
 )
 vi.mock(
-    "@use-cases/category/find-category-all/make-find-category-all-use-case",
+    "@application/use-cases/category/find-category-all/make-find-category-all-use-case",
     () => ({
         makeFindCategoryAllUseCase: vi.fn(),
     })

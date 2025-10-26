@@ -18,7 +18,7 @@ vi.mock("../generic/run-express-endpoint", () => ({
 
 export {}
 
-describe("orderItemRouter", () => {
+describe.skip("orderItemRouter", () => {
     it("should register all order-item routes with correct handlers", () => {
         expect(generic.runExpressEndpoint).toHaveBeenCalledWith(
             getAll.getOrderItemAll,

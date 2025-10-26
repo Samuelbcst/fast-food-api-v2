@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/product/delete-product-repository/make-delete-product-repository"
-import * as useCaseModule from "@use-cases/product/delete-product/make-delete-product-use-case"
+import * as useCaseModule from "@application/use-cases/product/delete-product/make-delete-product-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeDeleteProductFactory } from "./make-product-delete-dependencies"
 
 vi.mock(
-    "@use-cases/product/delete-product/make-delete-product-use-case",
+    "@application/use-cases/product/delete-product/make-delete-product-use-case",
     () => ({
         makeDeleteProductUseCase: vi.fn(),
     })
@@ -12,7 +12,7 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/product/delete-product-repository/make-delete-product-repository",
     () => ({
-        makeDeleteProductRepository: vi.fn(),
+        makeDeleteProductOutputPort: vi.fn(),
     })
 )
 
@@ -24,7 +24,7 @@ describe("makeDeleteProductFactory", () => {
 
     beforeEach(() => {
         mockedMakeDeleteProductRepository = vi.mocked(
-            repoModule.makeDeleteProductRepository
+            repoModule.makeDeleteProductOutputPort
         )
         mockedMakeDeleteProductUseCase = vi.mocked(
             useCaseModule.makeDeleteProductUseCase
@@ -41,7 +41,7 @@ describe("makeDeleteProductFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeDeleteProductFactory()
-        expect(repoModule.makeDeleteProductRepository).toHaveBeenCalled()
+        expect(repoModule.makeDeleteProductOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeDeleteProductUseCase).toHaveBeenCalledWith(
             mockRepository
         )

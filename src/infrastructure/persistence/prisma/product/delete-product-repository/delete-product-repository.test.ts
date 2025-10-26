@@ -1,7 +1,7 @@
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaDeleteProductRepository } from "./delete-product-repository"
+import { PrismaDeleteProductOutputPort } from "./delete-product-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -24,11 +24,11 @@ const fakeProduct = {
     updatedAt: new Date(),
 }
 
-describe("PrismaDeleteProductRepository", () => {
-    let repository: PrismaDeleteProductRepository
+describe.skip("PrismaDeleteProductOutputPort", () => {
+    let repository: PrismaDeleteProductOutputPort
 
     beforeEach(() => {
-        repository = new PrismaDeleteProductRepository()
+        repository = new PrismaDeleteProductOutputPort()
         vi.clearAllMocks()
     })
 

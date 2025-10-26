@@ -1,6 +1,6 @@
 import { OrderStatus } from "@entities/order/order"
 import { PaymentStatus } from "@entities/payment/payment"
-import { CustomError } from "@use-cases/custom-error"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { ProcessPaymentWebhookUseCase } from "."
@@ -109,7 +109,7 @@ describe("ProcessPaymentWebhookUseCase", () => {
         orderStatusUseCase.execute.mockResolvedValueOnce({
             success: false,
             result: null,
-            error: new CustomError(400, "invalid"),
+            error: new CustomError("invalid", 400),
         })
         const result = await useCase.execute({
             orderId: payment.orderId,

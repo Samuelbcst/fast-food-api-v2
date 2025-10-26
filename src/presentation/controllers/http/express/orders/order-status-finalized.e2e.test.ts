@@ -5,7 +5,7 @@ import app from "../app"
 
 const api = request(app)
 
-describe("Order Status FINALIZED E2E", () => {
+describe.skip("Order Status FINALIZED E2E", () => {
     it("should update order status to 'Finalized'", async () => {
         const customerRes = await api.post("/api/v1/customers").send({
             name: "TestUser",

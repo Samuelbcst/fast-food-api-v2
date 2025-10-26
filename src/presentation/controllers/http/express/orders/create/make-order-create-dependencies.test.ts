@@ -1,22 +1,22 @@
 import * as productRepoModule from "@persistence/prisma/product/find-product-by-id-repository/make-find-product-by-id-repository"
 import * as repoModule from "@persistence/prisma/order/create-order-repository/make-create-order-repository"
-import * as useCaseModule from "@use-cases/order/create-order/make-create-order-use-case"
+import * as useCaseModule from "@application/use-cases/order/create-order/make-create-order-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeCreateOrderFactory } from "./make-order-create-dependencies"
 
-vi.mock("@use-cases/order/create-order/make-create-order-use-case", () => ({
+vi.mock("@application/use-cases/order/create-order/make-create-order-use-case", () => ({
     makeCreateOrderUseCase: vi.fn(),
 }))
 vi.mock(
     "@persistence/prisma/order/create-order-repository/make-create-order-repository",
     () => ({
-        makeCreateOrderRepository: vi.fn(),
+        makeCreateOrderOutputPort: vi.fn(),
     })
 )
 vi.mock(
     "@persistence/prisma/product/find-product-by-id-repository/make-find-product-by-id-repository",
     () => ({
-        makeFindProductByIdRepository: vi.fn(),
+        makeFindProductByIdOutputPort: vi.fn(),
     })
 )
 
@@ -32,10 +32,10 @@ describe("makeCreateOrderFactory", () => {
 
     beforeEach(() => {
         mockedMakeCreateOrderRepository = vi.mocked(
-            repoModule.makeCreateOrderRepository
+            repoModule.makeCreateOrderOutputPort
         )
         mockedMakeFindProductByIdRepository = vi.mocked(
-            productRepoModule.makeFindProductByIdRepository
+            productRepoModule.makeFindProductByIdOutputPort
         )
         mockedMakeCreateOrderUseCase = vi.mocked(
             useCaseModule.makeCreateOrderUseCase
@@ -58,9 +58,9 @@ describe("makeCreateOrderFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeCreateOrderFactory()
-        expect(repoModule.makeCreateOrderRepository).toHaveBeenCalled()
+        expect(repoModule.makeCreateOrderOutputPort).toHaveBeenCalled()
         expect(
-            productRepoModule.makeFindProductByIdRepository
+            productRepoModule.makeFindProductByIdOutputPort
         ).toHaveBeenCalled()
         expect(useCaseModule.makeCreateOrderUseCase).toHaveBeenCalledWith(
             mockRepository,

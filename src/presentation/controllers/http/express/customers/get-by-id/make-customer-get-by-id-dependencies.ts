@@ -1,5 +1,5 @@
 import { makeFindCustomerByIdRepository } from "@persistence/prisma/customer/find-customer-by-id-repository/make-find-customer-by-id-repository"
-import { makeFindCustomerByIdUseCase } from "@use-cases/customer/find-customer-by-id/make-find-customer-by-id-use-case"
+import { makeFindCustomerByIdUseCase } from "@application/use-cases/customer/find-customer-by-id/make-find-customer-by-id-use-case"
 
 export const makeGetCustomerByIdFactory = async () => {
     const repository = await makeFindCustomerByIdRepository()

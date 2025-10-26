@@ -1,11 +1,11 @@
 import * as repoModule from "@persistence/prisma/customer/update-customer-repository/make-update-customer-repository"
-import * as useCaseModule from "@use-cases/customer/update-customer/make-update-customer-use-case"
+import * as useCaseModule from "@application/use-cases/customer/update-customer/make-update-customer-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeUpdateCustomerFactory } from "./make-customer-update-dependencies"
 
 vi.mock(
-    "@use-cases/customer/update-customer/make-update-customer-use-case",
+    "@application/use-cases/customer/update-customer/make-update-customer-use-case",
     () => ({
         makeUpdateCustomerUseCase: vi.fn(),
     })

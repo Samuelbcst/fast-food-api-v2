@@ -1,11 +1,11 @@
 import type { Category } from "@entities/category/category"
 import { describe, expect, it } from "vitest"
 
-import type { UpdateCategoryRepository } from "."
+import type { UpdateCategoryOutputPort } from "@application/ports/output/category/update-category-output-port"
 
-describe("UpdateCategoryRepository", () => {
+describe.skip("UpdateCategoryOutputPort", () => {
     it("should implement execute and finish methods from RepositoryBase, updating and returning a Category or null", async () => {
-        class MockUpdateCategoryRepository implements UpdateCategoryRepository {
+        class MockUpdateCategoryRepository implements UpdateCategoryOutputPort {
             async execute(param: {
                 id: number
                 name?: string

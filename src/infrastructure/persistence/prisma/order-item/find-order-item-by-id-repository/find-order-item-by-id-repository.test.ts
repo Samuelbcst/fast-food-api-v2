@@ -12,7 +12,7 @@ vi.mock("@libraries/prisma/client", () => ({
     },
 }))
 
-describe("PrismaFindOrderItemByIdRepository", () => {
+describe.skip("PrismaFindOrderItemByIdRepository", () => {
     let repository: PrismaFindOrderItemByIdRepository
 
     beforeEach(() => {

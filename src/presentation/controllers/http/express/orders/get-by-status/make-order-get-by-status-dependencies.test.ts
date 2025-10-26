@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/order/find-order-by-status-repository/make-find-order-by-status-repository"
-import * as useCaseModule from "@use-cases/order/find-order-by-status/make-find-order-by-status-use-case"
+import * as useCaseModule from "@application/use-cases/order/find-order-by-status/make-find-order-by-status-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeGetOrderByStatusFactory } from "./make-order-get-by-status-dependencies"
 
 vi.mock(
-    "@use-cases/order/find-order-by-status/make-find-order-by-status-use-case",
+    "@application/use-cases/order/find-order-by-status/make-find-order-by-status-use-case",
     () => ({
         makeFindOrderByStatusUseCase: vi.fn(),
     })
@@ -12,7 +12,7 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/order/find-order-by-status-repository/make-find-order-by-status-repository",
     () => ({
-        makeFindOrderByStatusRepository: vi.fn(),
+        makeFindOrderByStatusOutputPort: vi.fn(),
     })
 )
 
@@ -26,7 +26,7 @@ describe("makeGetOrderByStatusFactory", () => {
 
     beforeEach(() => {
         mockedMakeFindOrderByStatusRepository = vi.mocked(
-            repoModule.makeFindOrderByStatusRepository
+            repoModule.makeFindOrderByStatusOutputPort
         )
         mockedMakeFindOrderByStatusUseCase = vi.mocked(
             useCaseModule.makeFindOrderByStatusUseCase
@@ -45,7 +45,7 @@ describe("makeGetOrderByStatusFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeGetOrderByStatusFactory()
-        expect(repoModule.makeFindOrderByStatusRepository).toHaveBeenCalled()
+        expect(repoModule.makeFindOrderByStatusOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeFindOrderByStatusUseCase).toHaveBeenCalledWith(
             mockRepository
         )

@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/customer/find-customer-by-cpf-repository/make-find-customer-by-cpf-repository"
-import * as useCaseModule from "@use-cases/customer/find-customer-by-cpf"
+import * as useCaseModule from "@application/use-cases/customer/find-customer-by-cpf"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeGetCustomerByCpfFactory } from "./make-customer-get-by-cpf-dependencies"
 
-vi.mock("@use-cases/customer/find-customer-by-cpf", () => ({
+vi.mock("@application/use-cases/customer/find-customer-by-cpf", () => ({
     FindCustomerByCpfUseCase: vi.fn(),
 }))
 vi.mock(

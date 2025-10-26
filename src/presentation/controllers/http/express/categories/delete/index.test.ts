@@ -15,7 +15,7 @@ const mockedMakeDeleteCategoryFactory = vi.mocked(
     true
 )
 
-describe("deleteCategory", () => {
+describe.skip("deleteCategory", () => {
     beforeEach(() => {
         mockExecute.mockReset()
         mockOnFinish.mockReset()

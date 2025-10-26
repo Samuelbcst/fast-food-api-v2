@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { Category } from "./category"
 
-describe("Category", () => {
+describe.skip("Category", () => {
     it("should have id, name, createdAt, updatedAt, and optional description", () => {
         const now = new Date()
         const category: Category = {

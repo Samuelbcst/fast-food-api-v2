@@ -1,10 +1,10 @@
-import type { FindCustomerAllRepository } from "@src/application/repositories/customer/find-customer-all"
+import type { FindCustomerAllOutputPort } from "@application/ports/output/customer/find-customer-all-output-port"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindCustomerAllUseCase } from "."
 
 describe("FindCustomerAllUseCase", () => {
-    let repository: FindCustomerAllRepository
+    let repository: FindCustomerAllOutputPort
     let useCase: FindCustomerAllUseCase
     const customers = [
         {

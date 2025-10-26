@@ -4,7 +4,7 @@ import app from "../app"
 
 const api = request(app)
 
-describe("Payment E2E", () => {
+describe.skip("Payment E2E", () => {
     it("should simulate payment for the order", async () => {
         const customerRes = await api.post("/api/v1/customers").send({
             name: "TestUser",

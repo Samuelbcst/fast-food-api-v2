@@ -16,7 +16,7 @@ export class FindPaymentByOrderIdUseCase
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Payment not found for order"),
+                    error: new CustomError("Payment not found for order", 404),
                 }
             }
             return {

@@ -1,4 +1,4 @@
-import { CustomError } from "@use-cases/custom-error"
+import { CustomError } from "@application/use-cases/custom-error"
 import { UpdateCategoryCommand, UpdateCategoryInputPort } from "@application/ports/input/category/update-category-input"
 import { UpdateCategoryOutputPort } from "@application/ports/output/category/update-category-output-port"
 
@@ -13,7 +13,7 @@ export class UpdateCategoryUseCase implements UpdateCategoryInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Category not found."),
+                    error: new CustomError("Category not found.", 404),
                 }
             }
 

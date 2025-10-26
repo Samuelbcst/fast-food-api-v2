@@ -1,4 +1,4 @@
-import { CustomError } from "@use-cases/custom-error"
+import { CustomError } from "@application/use-cases/custom-error"
 import { Request } from "express"
 import { ZodError, z } from "zod"
 

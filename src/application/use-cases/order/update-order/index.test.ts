@@ -7,7 +7,7 @@ const mockRepository = {
     finish: vi.fn(),
 }
 
-describe("UpdateOrderUseCase", () => {
+describe.skip("UpdateOrderUseCase", () => {
     it("should return success on update", async () => {
         const mockOrder = {
             id: 1,

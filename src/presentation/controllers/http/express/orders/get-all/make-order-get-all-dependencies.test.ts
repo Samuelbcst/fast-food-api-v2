@@ -1,15 +1,15 @@
 import * as repoModule from "@persistence/prisma/order/find-order-all-repository/make-find-order-all-repository"
-import * as useCaseModule from "@use-cases/order/find-order-all/make-find-order-all-use-case"
+import * as useCaseModule from "@application/use-cases/order/find-order-all/make-find-order-all-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeGetOrderAllFactory } from "./make-order-get-all-dependencies"
 
-vi.mock("@use-cases/order/find-order-all/make-find-order-all-use-case", () => ({
+vi.mock("@application/use-cases/order/find-order-all/make-find-order-all-use-case", () => ({
     makeFindOrderAllUseCase: vi.fn(),
 }))
 vi.mock(
     "@persistence/prisma/order/find-order-all-repository/make-find-order-all-repository",
     () => ({
-        makeFindOrderAllRepository: vi.fn(),
+        makeFindOrderAllOutputPort: vi.fn(),
     })
 )
 
@@ -23,7 +23,7 @@ describe("makeGetOrderAllFactory", () => {
 
     beforeEach(() => {
         mockedMakeFindOrderAllRepository = vi.mocked(
-            repoModule.makeFindOrderAllRepository
+            repoModule.makeFindOrderAllOutputPort
         )
         mockedMakeFindOrderAllUseCase = vi.mocked(
             useCaseModule.makeFindOrderAllUseCase
@@ -40,7 +40,7 @@ describe("makeGetOrderAllFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeGetOrderAllFactory()
-        expect(repoModule.makeFindOrderAllRepository).toHaveBeenCalled()
+        expect(repoModule.makeFindOrderAllOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeFindOrderAllUseCase).toHaveBeenCalledWith(
             mockRepository
         )

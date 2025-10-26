@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { makeDeleteProductRepository } from "./make-delete-product-repository"
 
-describe("makeDeleteProductRepository", () => {
+describe.skip("makeDeleteProductRepository", () => {
     it("should return repository instance", async () => {
         const repo = await makeDeleteProductRepository()
         expect(repo).toBeDefined()

@@ -12,7 +12,7 @@ export class DeleteProductUseCase implements DeleteProductInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Product not found."),
+                    error: new CustomError("Product not found.", 404),
                 }
             }
             return {

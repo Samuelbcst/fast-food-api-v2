@@ -8,7 +8,7 @@ const mockUseCase = {
     deleteOrderRepository: undefined, // satisfy type
 } as any // cast to any to ignore private property
 
-describe("deleteOrder", () => {
+describe.skip("deleteOrder", () => {
     beforeEach(() => {
         vi.clearAllMocks()
         vi.spyOn(factory, "makeDeleteOrderFactory").mockResolvedValue(

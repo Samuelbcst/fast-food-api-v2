@@ -12,7 +12,7 @@ export class DeleteOrderItemUseCase implements DeleteOrderItemInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Order item not found."),
+                    error: new CustomError("Order item not found.", 404),
                 }
             }
             return {

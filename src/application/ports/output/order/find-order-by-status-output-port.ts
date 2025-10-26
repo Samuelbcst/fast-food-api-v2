@@ -1,5 +1,5 @@
 import { Order } from "@entities/order/order"
-import { OrderStatus } from "@entities/order/order-status"
+import { OrderStatus } from "@entities/order/order"
 
 /**
  * Output Port for finding orders by status

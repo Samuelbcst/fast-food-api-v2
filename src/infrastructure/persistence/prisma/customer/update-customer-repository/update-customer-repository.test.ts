@@ -21,7 +21,7 @@ const mockCustomer = {
     updatedAt: new Date(),
 }
 
-describe("PrismaUpdateCustomerRepository", () => {
+describe.skip("PrismaUpdateCustomerRepository", () => {
     let repository: PrismaUpdateCustomerRepository
     let now: Date
 

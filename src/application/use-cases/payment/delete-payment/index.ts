@@ -12,7 +12,7 @@ export class DeletePaymentUseCase implements DeletePaymentInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Payment not found."),
+                    error: new CustomError("Payment not found.", 404),
                 }
             }
             return {

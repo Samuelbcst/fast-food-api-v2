@@ -1,12 +1,12 @@
 import * as repoModule from "@persistence/prisma/category/update-category-repository/make-update-category-repository"
-import * as useCaseModule from "@use-cases/category/update-category/make-update-category-use-case"
+import * as useCaseModule from "@application/use-cases/category/update-category/make-update-category-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeUpdateCategoryFactory } from "./make-category-update-dependencies"
 
 // Hoist mocks for both dependencies
 vi.mock(
-    "@use-cases/category/update-category/make-update-category-use-case",
+    "@application/use-cases/category/update-category/make-update-category-use-case",
     () => ({
         makeUpdateCategoryUseCase: vi.fn(),
     })

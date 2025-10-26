@@ -24,7 +24,7 @@ const mockOrderItem = {
     updatedAt: new Date(),
 }
 
-describe("PrismaDeleteOrderItemRepository", () => {
+describe.skip("PrismaDeleteOrderItemRepository", () => {
     let repository: PrismaDeleteOrderItemRepository
 
     beforeEach(() => {

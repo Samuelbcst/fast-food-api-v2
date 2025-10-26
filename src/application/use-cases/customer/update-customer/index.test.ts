@@ -1,11 +1,11 @@
-import type { UpdateCustomerRepository } from "@src/application/repositories/customer/update-customer"
-import { CustomError } from "@use-cases/custom-error"
+import type { UpdateCustomerOutputPort } from "@application/ports/output/customer/update-customer-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { UpdateCustomerUseCase } from "."
 
 describe("UpdateCustomerUseCase", () => {
-    let repository: UpdateCustomerRepository
+    let repository: UpdateCustomerOutputPort
     let useCase: UpdateCustomerUseCase
     const input = {
         id: 1,

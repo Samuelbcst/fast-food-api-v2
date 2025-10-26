@@ -1,12 +1,12 @@
 import { OrderStatus } from "@entities/order/order"
-import type { FindOrderByStatusRepository } from "@src/application/repositories/order/find-order-by-status"
-import { CustomError } from "@use-cases/custom-error"
+import type { FindOrderByStatusOutputPort } from "@application/ports/output/order/find-order-by-status-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindOrderByStatusUseCase } from "."
 
 describe("FindOrderByStatusUseCase", () => {
-    let repository: FindOrderByStatusRepository
+    let repository: FindOrderByStatusOutputPort
     let useCase: FindOrderByStatusUseCase
     const input = { status: OrderStatus.RECEIVED }
     const orders = [

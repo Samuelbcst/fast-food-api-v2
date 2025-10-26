@@ -1,11 +1,11 @@
-import type { UpdateOrderItemRepository } from "@src/application/repositories/order-item/update-order-item"
-import { CustomError } from "@use-cases/custom-error"
+import type { UpdateOrderItemOutputPort } from "@application/ports/output/order-item/update-order-item-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { UpdateOrderItemUseCase } from "."
 
 describe("UpdateOrderItemUseCase", () => {
-    let repository: UpdateOrderItemRepository
+    let repository: UpdateOrderItemOutputPort
     let useCase: UpdateOrderItemUseCase
     const input = {
         id: 1,

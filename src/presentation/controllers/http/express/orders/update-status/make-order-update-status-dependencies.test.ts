@@ -1,12 +1,12 @@
 import * as findOrderRepoModule from "@persistence/prisma/order/find-order-by-id-repository/make-find-order-by-id-repository"
 import * as findPaymentRepoModule from "@persistence/prisma/payment/find-payment-by-order-id-repository/make-find-payment-by-order-id-repository"
 import * as repoModule from "@persistence/prisma/order/update-order-status-repository/make-update-order-status-repository"
-import * as useCaseModule from "@use-cases/order/update-order-status/make-update-order-status-use-case"
+import * as useCaseModule from "@application/use-cases/order/update-order-status/make-update-order-status-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeUpdateOrderStatusFactory } from "./make-order-update-status-dependencies"
 
 vi.mock(
-    "@use-cases/order/update-order-status/make-update-order-status-use-case",
+    "@application/use-cases/order/update-order-status/make-update-order-status-use-case",
     () => ({
         makeUpdateOrderStatusUseCase: vi.fn(),
     })
@@ -14,19 +14,19 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/order/find-order-by-id-repository/make-find-order-by-id-repository",
     () => ({
-        makeFindOrderByIdRepository: vi.fn(),
+        makeFindOrderByIdOutputPort: vi.fn(),
     })
 )
 vi.mock(
     "@persistence/prisma/order/update-order-status-repository/make-update-order-status-repository",
     () => ({
-        makeUpdateOrderStatusRepository: vi.fn(),
+        makeUpdateOrderStatusOutputPort: vi.fn(),
     })
 )
 vi.mock(
     "@persistence/prisma/payment/find-payment-by-order-id-repository/make-find-payment-by-order-id-repository",
     () => ({
-        makeFindPaymentByOrderIdRepository: vi.fn(),
+        makeFindPaymentByOrderIdOutputPort: vi.fn(),
     })
 )
 
@@ -44,13 +44,13 @@ describe("makeUpdateOrderStatusFactory", () => {
 
     beforeEach(() => {
         mockedMakeUpdateOrderStatusRepository = vi.mocked(
-            repoModule.makeUpdateOrderStatusRepository
+            repoModule.makeUpdateOrderStatusOutputPort
         )
         mockedMakeFindOrderByIdRepository = vi.mocked(
-            findOrderRepoModule.makeFindOrderByIdRepository
+            findOrderRepoModule.makeFindOrderByIdOutputPort
         )
         mockedMakeFindPaymentByOrderIdRepository = vi.mocked(
-            findPaymentRepoModule.makeFindPaymentByOrderIdRepository
+            findPaymentRepoModule.makeFindPaymentByOrderIdOutputPort
         )
         mockedMakeUpdateOrderStatusUseCase = vi.mocked(
             useCaseModule.makeUpdateOrderStatusUseCase
@@ -82,10 +82,10 @@ describe("makeUpdateOrderStatusFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeUpdateOrderStatusFactory()
-        expect(repoModule.makeUpdateOrderStatusRepository).toHaveBeenCalled()
-        expect(findOrderRepoModule.makeFindOrderByIdRepository).toHaveBeenCalled()
+        expect(repoModule.makeUpdateOrderStatusOutputPort).toHaveBeenCalled()
+        expect(findOrderRepoModule.makeFindOrderByIdOutputPort).toHaveBeenCalled()
         expect(
-            findPaymentRepoModule.makeFindPaymentByOrderIdRepository
+            findPaymentRepoModule.makeFindPaymentByOrderIdOutputPort
         ).toHaveBeenCalled()
         expect(useCaseModule.makeUpdateOrderStatusUseCase).toHaveBeenCalledWith(
             mockRepository,

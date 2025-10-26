@@ -12,7 +12,7 @@ export class DeleteOrderUseCase implements DeleteOrderInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Order not found."),
+                    error: new CustomError("Order not found.", 404),
                 }
             }
             return {

@@ -17,7 +17,7 @@ export class FindCustomerByCpfUseCase implements FindCustomerByCpfInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Customer not found."),
+                    error: new CustomError("Customer not found.", 404),
                 }
             }
 

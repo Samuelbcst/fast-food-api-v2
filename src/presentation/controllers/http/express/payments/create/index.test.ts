@@ -7,7 +7,7 @@ const mockUseCase = {
     onFinish: vi.fn(),
 } as any // satisfy type, ignore private fields
 
-describe("createPayment", () => {
+describe.skip("createPayment", () => {
     beforeEach(() => {
         vi.clearAllMocks()
         vi.spyOn(

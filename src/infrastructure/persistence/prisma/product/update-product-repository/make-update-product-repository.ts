@@ -1,5 +1,5 @@
-import { PrismaUpdateProductRepository } from "./update-product-repository"
+import { PrismaUpdateProductOutputPort } from "./update-product-repository"
 
-export const makeUpdateProductRepository = async () => {
-    return new PrismaUpdateProductRepository()
+export const makeUpdateProductOutputPort = async () => {
+    return new PrismaUpdateProductOutputPort()
 }

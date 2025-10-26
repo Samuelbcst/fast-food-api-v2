@@ -75,7 +75,7 @@ categoryRouter.get("/:id", runExpressEndpoint(getCategoryById, "get"))
  *       400:
  *         description: Invalid input.
  */
-categoryRouter.post("/", runExpressEndpoint(createCategory, "post"))
+categoryRouter.post("/", createCategory)
 
 /**
  * @openapi

@@ -1,7 +1,7 @@
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaCreateProductRepository } from "./create-product-repository"
+import { PrismaCreateProductOutputPort } from "./create-product-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -23,11 +23,11 @@ const productData = {
     updatedAt: new Date(),
 }
 
-describe("PrismaCreateProductRepository", () => {
-    let repository: PrismaCreateProductRepository
+describe("PrismaCreateProductOutputPort", () => {
+    let repository: PrismaCreateProductOutputPort
 
     beforeEach(() => {
-        repository = new PrismaCreateProductRepository()
+        repository = new PrismaCreateProductOutputPort()
         vi.clearAllMocks()
     })
 

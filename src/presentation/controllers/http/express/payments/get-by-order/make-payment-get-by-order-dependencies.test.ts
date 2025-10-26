@@ -1,14 +1,14 @@
 import * as repoModule from "@persistence/prisma/payment/find-payment-by-order-id-repository/make-find-payment-by-order-id-repository"
-import * as useCaseModule from "@use-cases/payment/find-payment-by-order-id/make-find-payment-by-order-id-use-case"
+import * as useCaseModule from "@application/use-cases/payment/find-payment-by-order-id/make-find-payment-by-order-id-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeGetPaymentByOrderFactory } from "./make-payment-get-by-order-dependencies"
 
 vi.mock("@persistence/prisma/payment/find-payment-by-order-id-repository/make-find-payment-by-order-id-repository", () => ({
-    makeFindPaymentByOrderIdRepository: vi.fn(),
+    makeFindPaymentByOrderIdOutputPort: vi.fn(),
 }))
 
-vi.mock("@use-cases/payment/find-payment-by-order-id/make-find-payment-by-order-id-use-case", () => ({
+vi.mock("@application/use-cases/payment/find-payment-by-order-id/make-find-payment-by-order-id-use-case", () => ({
     makeFindPaymentByOrderIdUseCase: vi.fn(),
 }))
 
@@ -20,7 +20,7 @@ describe("makeGetPaymentByOrderFactory", () => {
 
     beforeEach(() => {
         mockedRepoFactory = vi.mocked(
-            repoModule.makeFindPaymentByOrderIdRepository
+            repoModule.makeFindPaymentByOrderIdOutputPort
         )
         mockedUseCaseFactory = vi.mocked(
             useCaseModule.makeFindPaymentByOrderIdUseCase
@@ -33,7 +33,7 @@ describe("makeGetPaymentByOrderFactory", () => {
 
     it("creates the use case with repository", async () => {
         const result = await makeGetPaymentByOrderFactory()
-        expect(repoModule.makeFindPaymentByOrderIdRepository).toHaveBeenCalled()
+        expect(repoModule.makeFindPaymentByOrderIdOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeFindPaymentByOrderIdUseCase).toHaveBeenCalledWith(
             mockRepository
         )

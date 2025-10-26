@@ -1,7 +1,7 @@
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaCreateOrderItemRepository } from "./create-order-item-repository"
+import { PrismaCreateOrderItemOutputPort } from "./create-order-item-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -23,11 +23,11 @@ const mockOrderItem = {
     updatedAt: new Date(),
 }
 
-describe("PrismaCreateOrderItemRepository", () => {
-    let repository: PrismaCreateOrderItemRepository
+describe("PrismaCreateOrderItemOutputPort", () => {
+    let repository: PrismaCreateOrderItemOutputPort
 
     beforeEach(() => {
-        repository = new PrismaCreateOrderItemRepository()
+        repository = new PrismaCreateOrderItemOutputPort()
         vi.clearAllMocks()
     })
 

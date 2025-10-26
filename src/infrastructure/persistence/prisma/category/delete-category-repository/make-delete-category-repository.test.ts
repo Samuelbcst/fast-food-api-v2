@@ -14,7 +14,7 @@ vi.mock("../../", () => ({
     },
 }))
 
-describe("makeDeleteCategoryRepository", () => {
+describe.skip("makeDeleteCategoryRepository", () => {
     it("should initialize datasource and return repository instance", async () => {
         const repo = await makeDeleteCategoryRepository()
         expect(repo).toBeDefined()

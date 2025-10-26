@@ -1,11 +1,11 @@
-import type { DeleteCustomerRepository } from "@src/application/repositories/customer/delete-customer"
-import { CustomError } from "@use-cases/custom-error"
+import type { DeleteCustomerOutputPort } from "@application/ports/output/customer/delete-customer-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { DeleteCustomerUseCase } from "."
 
 describe("DeleteCustomerUseCase", () => {
-    let repository: DeleteCustomerRepository
+    let repository: DeleteCustomerOutputPort
     let useCase: DeleteCustomerUseCase
     const input = { id: 1 }
     const customer = {

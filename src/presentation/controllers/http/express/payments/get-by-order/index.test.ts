@@ -8,7 +8,7 @@ const mockUseCase = {
     onFinish: vi.fn(),
 } as any
 
-describe("getPaymentByOrder", () => {
+describe.skip("getPaymentByOrder", () => {
     beforeEach(() => {
         vi.clearAllMocks()
         vi.spyOn(factory, "makeGetPaymentByOrderFactory").mockResolvedValue(

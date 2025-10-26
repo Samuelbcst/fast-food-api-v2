@@ -1,4 +1,3 @@
-import { BaseEntity } from "@entities/base-entity"
 import { Category } from "@entities/category/category"
 
 /**
@@ -6,6 +5,15 @@ import { Category } from "@entities/category/category"
  * Defines the contract that infrastructure adapters must implement
  */
 export interface CreateCategoryOutputPort {
-    create(input: Omit<Category, keyof BaseEntity>): Promise<Category>
+    /**
+     * Create a new category in the database
+     * @param category The category entity to persist
+     * @returns The persisted category
+     */
+    create(category: Category): Promise<Category>
+
+    /**
+     * Cleanup resources (e.g., close database connections)
+     */
     finish(): Promise<void>
 }

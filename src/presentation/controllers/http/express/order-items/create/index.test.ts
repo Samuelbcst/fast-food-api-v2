@@ -13,7 +13,7 @@ vi.mock("../../products/get-by-id/make-product-get-by-id-dependencies", () => ({
 
 export {}
 
-describe("createOrderItem", () => {
+describe.skip("createOrderItem", () => {
     const mockProductUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

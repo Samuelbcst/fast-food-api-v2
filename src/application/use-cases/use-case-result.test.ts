@@ -15,7 +15,7 @@ describe("UseCaseResult", () => {
     })
 
     it("should allow error result", () => {
-        const error = new CustomError(400, "fail")
+        const error = new CustomError("fail", 400)
         const result: UseCaseResult = {
             success: false,
             result: null,

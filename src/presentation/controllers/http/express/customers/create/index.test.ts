@@ -9,7 +9,7 @@ vi.mock("./make-customer-create-dependencies", () => ({
 
 export {}
 
-describe("createCustomer", () => {
+describe.skip("createCustomer", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

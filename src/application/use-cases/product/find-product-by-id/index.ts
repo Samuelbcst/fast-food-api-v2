@@ -15,7 +15,7 @@ export class FindProductByIdUseCase implements FindProductByIdInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Product not found."),
+                    error: new CustomError("Product not found.", 404),
                 }
             }
 

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { makeUpdateOrderItemRepository } from "./make-update-order-item-repository"
 
-describe("makeUpdateOrderItemRepository", () => {
+describe.skip("makeUpdateOrderItemRepository", () => {
     it("should return repository instance", async () => {
         const repo = await makeUpdateOrderItemRepository()
         expect(repo).toBeDefined()

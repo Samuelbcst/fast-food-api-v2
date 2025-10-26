@@ -1,11 +1,11 @@
 import * as repoModule from "@persistence/prisma/customer/find-customer-all-repository/make-find-customer-all-repository"
-import * as useCaseModule from "@use-cases/customer/find-customer-all/make-find-customer-all-use-case"
+import * as useCaseModule from "@application/use-cases/customer/find-customer-all/make-find-customer-all-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeGetCustomerAllFactory } from "./make-customer-get-all-dependencies"
 
 vi.mock(
-    "@use-cases/customer/find-customer-all/make-find-customer-all-use-case",
+    "@application/use-cases/customer/find-customer-all/make-find-customer-all-use-case",
     () => ({
         makeFindCustomerAllUseCase: vi.fn(),
     })

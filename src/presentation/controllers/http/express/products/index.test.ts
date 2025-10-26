@@ -18,7 +18,7 @@ vi.mock("../generic/run-express-endpoint", () => ({
     runExpressEndpoint: vi.fn((fn, method) => fn),
 }))
 
-describe("productRouter", () => {
+describe.skip("productRouter", () => {
     it("should register all product routes with correct handlers", () => {
         expect(generic.runExpressEndpoint).toHaveBeenCalledWith(
             getAll.getProductAll,

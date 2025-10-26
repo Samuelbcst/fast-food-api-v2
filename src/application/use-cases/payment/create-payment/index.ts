@@ -19,7 +19,7 @@ export class CreatePaymentUseCase implements CreatePaymentInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Order not found"),
+                    error: new CustomError("Order not found", 404),
                 }
             }
 
@@ -30,7 +30,7 @@ export class CreatePaymentUseCase implements CreatePaymentInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(400, "Payment amount must be greater than zero"),
+                    error: new CustomError("Payment amount must be greater than zero", 400),
                 }
             }
 

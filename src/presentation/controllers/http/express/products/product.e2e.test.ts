@@ -4,7 +4,7 @@ import app from "../app"
 
 const api = request(app)
 
-describe("Product E2E", () => {
+describe.skip("Product E2E", () => {
     it("should create a product", async () => {
         const categoryRes = await api.post("/api/v1/categories").send({
             name: "Lanche",

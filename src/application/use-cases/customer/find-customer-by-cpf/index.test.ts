@@ -1,11 +1,11 @@
-import type { FindCustomerByCpfRepository } from "@src/application/repositories/customer/find-customer-by-cpf"
-import { CustomError } from "@use-cases/custom-error"
+import type { FindCustomerByCpfOutputPort } from "@application/ports/output/customer/find-customer-by-cpf-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindCustomerByCpfUseCase } from "."
 
 describe("FindCustomerByCpfUseCase", () => {
-    let repository: FindCustomerByCpfRepository
+    let repository: FindCustomerByCpfOutputPort
     let useCase: FindCustomerByCpfUseCase
     const input = { cpf: "12345678900" }
     const customer = {

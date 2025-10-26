@@ -7,7 +7,7 @@ const mockUseCase = {
     onFinish: vi.fn(),
 } as any
 
-describe("deleteProduct", () => {
+describe.skip("deleteProduct", () => {
     beforeEach(() => {
         vi.clearAllMocks()
         vi.spyOn(

@@ -39,7 +39,7 @@ export class ProcessPaymentWebhookUseCase
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Payment not found for order"),
+                    error: new CustomError("Payment not found for order", 404),
                 }
             }
 
@@ -58,7 +58,7 @@ export class ProcessPaymentWebhookUseCase
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Payment not found"),
+                    error: new CustomError("Payment not found", 404),
                 }
             }
 
@@ -76,7 +76,7 @@ export class ProcessPaymentWebhookUseCase
                         result: null,
                         error:
                             updateOrderResult.error ||
-                            new CustomError(400, "Failed to update order status"),
+                            new CustomError("Failed to update order status", 400),
                     }
                 }
 

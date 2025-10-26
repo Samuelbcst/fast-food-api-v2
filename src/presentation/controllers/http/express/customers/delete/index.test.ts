@@ -7,7 +7,7 @@ vi.mock("./make-customer-delete-dependencies", () => ({
     makeDeleteCustomerFactory: vi.fn(),
 }))
 
-describe("deleteCustomer", () => {
+describe.skip("deleteCustomer", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

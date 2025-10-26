@@ -1,5 +1,5 @@
-import { PrismaDeleteProductRepository } from "./delete-product-repository"
+import { PrismaDeleteProductOutputPort } from "./delete-product-repository"
 
-export const makeDeleteProductRepository = async () => {
-    return new PrismaDeleteProductRepository()
+export const makeDeleteProductOutputPort = async () => {
+    return new PrismaDeleteProductOutputPort()
 }

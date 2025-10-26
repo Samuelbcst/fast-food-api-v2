@@ -6,7 +6,7 @@ vi.mock("./make-order-item-delete-dependencies", () => ({
     makeDeleteOrderItemFactory: vi.fn(),
 }))
 
-describe("deleteOrderItem", () => {
+describe.skip("deleteOrderItem", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

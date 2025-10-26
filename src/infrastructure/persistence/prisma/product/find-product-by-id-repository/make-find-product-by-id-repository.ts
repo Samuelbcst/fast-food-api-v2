@@ -1,5 +1,5 @@
-import { PrismaFindProductByIdRepository } from "./find-product-by-id-repository"
+import { PrismaFindProductByIdOutputPort } from "./find-product-by-id-repository"
 
-export const makeFindProductByIdRepository = async () => {
-    return new PrismaFindProductByIdRepository()
+export const makeFindProductByIdOutputPort = async () => {
+    return new PrismaFindProductByIdOutputPort()
 }

@@ -1,5 +1,5 @@
 import { PaymentStatus } from "@entities/payment/payment"
-import { CustomError } from "@use-cases/custom-error"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { UpdatePaymentUseCase } from "."

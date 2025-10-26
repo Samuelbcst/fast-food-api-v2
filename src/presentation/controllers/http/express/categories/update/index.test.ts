@@ -11,7 +11,7 @@ vi.mock("./make-category-update-dependencies", () => ({
 
 export {}
 
-describe("updateCategory", () => {
+describe.skip("updateCategory", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

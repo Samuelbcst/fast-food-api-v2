@@ -1,11 +1,11 @@
-import type { FindCustomerByIdRepository } from "@src/application/repositories/customer/find-customer-by-id"
-import { CustomError } from "@use-cases/custom-error"
+import type { FindCustomerByIdOutputPort } from "@application/ports/output/customer/find-customer-by-id-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindCustomerByIdUseCase } from "."
 
 describe("FindCustomerByIdUseCase", () => {
-    let repository: FindCustomerByIdRepository
+    let repository: FindCustomerByIdOutputPort
     let useCase: FindCustomerByIdUseCase
     const input = { id: 1 }
     const customer = {

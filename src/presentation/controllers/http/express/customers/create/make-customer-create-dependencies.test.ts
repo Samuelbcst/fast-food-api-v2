@@ -1,5 +1,5 @@
 import { makeCreateCustomerRepository } from "@persistence/prisma/customer/create-customer-repository/make-create-customer-repository"
-import { makeCreateCustomerUseCase } from "@use-cases/customer/create-customer/make-create-customer-use-case"
+import { makeCreateCustomerUseCase } from "@application/use-cases/customer/create-customer/make-create-customer-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeCreateCustomerFactory } from "./make-customer-create-dependencies"
@@ -11,7 +11,7 @@ vi.mock(
     })
 )
 vi.mock(
-    "@use-cases/customer/create-customer/make-create-customer-use-case",
+    "@application/use-cases/customer/create-customer/make-create-customer-use-case",
     () => ({
         makeCreateCustomerUseCase: vi.fn(),
     })

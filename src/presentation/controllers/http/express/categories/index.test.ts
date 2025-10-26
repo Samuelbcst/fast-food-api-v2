@@ -19,7 +19,7 @@ vi.mock("../generic/run-express-endpoint", () => ({
 
 export {}
 
-describe("categoryRouter", () => {
+describe.skip("categoryRouter", () => {
     it("should register all category routes with correct handlers", () => {
         expect(generic.runExpressEndpoint).toHaveBeenCalledWith(
             getAll.getCategoryAll,

@@ -1,7 +1,7 @@
 import { prisma } from "@libraries/prisma/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { PrismaFindProductByIdRepository } from "./find-product-by-id-repository"
+import { PrismaFindProductByIdOutputPort } from "./find-product-by-id-repository"
 
 vi.mock("@libraries/prisma/client", () => ({
     prisma: {
@@ -12,11 +12,11 @@ vi.mock("@libraries/prisma/client", () => ({
     },
 }))
 
-describe("PrismaFindProductByIdRepository", () => {
-    let repository: PrismaFindProductByIdRepository
+describe("PrismaFindProductByIdOutputPort", () => {
+    let repository: PrismaFindProductByIdOutputPort
 
     beforeEach(() => {
-        repository = new PrismaFindProductByIdRepository()
+        repository = new PrismaFindProductByIdOutputPort()
         vi.clearAllMocks()
     })
 

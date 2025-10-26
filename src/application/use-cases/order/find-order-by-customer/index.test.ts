@@ -1,12 +1,12 @@
 import { OrderStatus } from "@entities/order/order"
-import type { FindOrderByCustomerRepository } from "@src/application/repositories/order/find-order-by-customer"
-import { CustomError } from "@use-cases/custom-error"
+import type { FindOrderByCustomerOutputPort } from "@application/ports/output/order/find-order-by-customer-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { FindOrderByCustomerUseCase } from "."
 
 describe("FindOrderByCustomerUseCase", () => {
-    let repository: FindOrderByCustomerRepository
+    let repository: FindOrderByCustomerOutputPort
     let useCase: FindOrderByCustomerUseCase
     const input = { customerId: 1 }
     const orders = [

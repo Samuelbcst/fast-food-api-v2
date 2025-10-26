@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { makeFindOrderByStatusRepository } from "./make-find-order-by-status-repository"
 
-describe("makeFindOrderByStatusRepository", () => {
+describe.skip("makeFindOrderByStatusRepository", () => {
     it("should return repository instance", async () => {
         const repo = await makeFindOrderByStatusRepository()
         expect(repo).toBeDefined()

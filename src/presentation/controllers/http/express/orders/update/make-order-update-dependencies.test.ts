@@ -1,15 +1,15 @@
 import * as repoModule from "@persistence/prisma/order/update-order-repository/make-update-order-repository"
-import * as useCaseModule from "@use-cases/order/update-order/make-update-order-use-case"
+import * as useCaseModule from "@application/use-cases/order/update-order/make-update-order-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeUpdateOrderFactory } from "./make-order-update-dependencies"
 
-vi.mock("@use-cases/order/update-order/make-update-order-use-case", () => ({
+vi.mock("@application/use-cases/order/update-order/make-update-order-use-case", () => ({
     makeUpdateOrderUseCase: vi.fn(),
 }))
 vi.mock(
     "@persistence/prisma/order/update-order-repository/make-update-order-repository",
     () => ({
-        makeUpdateOrderRepository: vi.fn(),
+        makeUpdateOrderOutputPort: vi.fn(),
     })
 )
 
@@ -23,7 +23,7 @@ describe("makeUpdateOrderFactory", () => {
 
     beforeEach(() => {
         mockedMakeUpdateOrderRepository = vi.mocked(
-            repoModule.makeUpdateOrderRepository
+            repoModule.makeUpdateOrderOutputPort
         )
         mockedMakeUpdateOrderUseCase = vi.mocked(
             useCaseModule.makeUpdateOrderUseCase
@@ -40,7 +40,7 @@ describe("makeUpdateOrderFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeUpdateOrderFactory()
-        expect(repoModule.makeUpdateOrderRepository).toHaveBeenCalled()
+        expect(repoModule.makeUpdateOrderOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeUpdateOrderUseCase).toHaveBeenCalledWith(
             mockRepository
         )

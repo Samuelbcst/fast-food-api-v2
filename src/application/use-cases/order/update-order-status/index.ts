@@ -30,7 +30,7 @@ export class UpdateOrderStatusUseCase implements UpdateOrderStatusInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Order not found."),
+                    error: new CustomError("Order not found.", 404),
                 }
             }
 
@@ -74,7 +74,7 @@ export class UpdateOrderStatusUseCase implements UpdateOrderStatusInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Order not found."),
+                    error: new CustomError("Order not found.", 404),
                 }
             }
 

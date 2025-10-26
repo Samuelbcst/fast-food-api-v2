@@ -12,7 +12,7 @@ export class DeleteCustomerUseCase implements DeleteCustomerInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Customer not found."),
+                    error: new CustomError("Customer not found.", 404),
                 }
             }
             return {

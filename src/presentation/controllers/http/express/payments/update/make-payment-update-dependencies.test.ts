@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/payment/update-payment-repository/make-update-payment-repository"
-import * as useCaseModule from "@use-cases/payment/update-payment/make-update-payment-use-case"
+import * as useCaseModule from "@application/use-cases/payment/update-payment/make-update-payment-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeUpdatePaymentFactory } from "./make-payment-update-dependencies"
 
 vi.mock(
-    "@use-cases/payment/update-payment/make-update-payment-use-case",
+    "@application/use-cases/payment/update-payment/make-update-payment-use-case",
     () => ({
         makeUpdatePaymentUseCase: vi.fn(),
     })
@@ -12,7 +12,7 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/payment/update-payment-repository/make-update-payment-repository",
     () => ({
-        makeUpdatePaymentRepository: vi.fn(),
+        makeUpdatePaymentOutputPort: vi.fn(),
     })
 )
 
@@ -26,7 +26,7 @@ describe("makeUpdatePaymentFactory", () => {
 
     beforeEach(() => {
         mockedMakeUpdatePaymentRepository = vi.mocked(
-            repoModule.makeUpdatePaymentRepository
+            repoModule.makeUpdatePaymentOutputPort
         )
         mockedMakeUpdatePaymentUseCase = vi.mocked(
             useCaseModule.makeUpdatePaymentUseCase
@@ -43,7 +43,7 @@ describe("makeUpdatePaymentFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeUpdatePaymentFactory()
-        expect(repoModule.makeUpdatePaymentRepository).toHaveBeenCalled()
+        expect(repoModule.makeUpdatePaymentOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeUpdatePaymentUseCase).toHaveBeenCalledWith(
             mockRepository
         )

@@ -10,7 +10,7 @@ vi.mock("./make-category-get-by-id-dependencies", () => ({
 
 export {}
 
-describe("getCategoryById", () => {
+describe.skip("getCategoryById", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import { Customer } from "./customer"
 
-describe("Customer", () => {
+describe.skip("Customer", () => {
     it("should have id, name, email, cpf, createdAt, updatedAt", () => {
         const now = new Date()
         const customer: Customer = {

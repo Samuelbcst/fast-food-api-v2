@@ -1,12 +1,12 @@
 import * as repoModule from "@persistence/prisma/category/find-category-by-id-repository/make-find-category-by-id-repository"
-import * as useCaseModule from "@use-cases/category/find-category-by-id/make-find-category-by-id-use-case"
+import * as useCaseModule from "@application/use-cases/category/find-category-by-id/make-find-category-by-id-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeGetCategoryByIdFactory } from "./make-category-get-by-id-dependencies"
 
 // Hoist mocks for both dependencies
 vi.mock(
-    "@use-cases/category/find-category-by-id/make-find-category-by-id-use-case",
+    "@application/use-cases/category/find-category-by-id/make-find-category-by-id-use-case",
     () => ({
         makeFindCategoryByIdUseCase: vi.fn(),
     })

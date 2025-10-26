@@ -1,11 +1,11 @@
 import * as repoModule from "@persistence/prisma/customer/find-customer-by-id-repository/make-find-customer-by-id-repository"
-import * as useCaseModule from "@use-cases/customer/find-customer-by-id/make-find-customer-by-id-use-case"
+import * as useCaseModule from "@application/use-cases/customer/find-customer-by-id/make-find-customer-by-id-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeGetCustomerByIdFactory } from "./make-customer-get-by-id-dependencies"
 
 vi.mock(
-    "@use-cases/customer/find-customer-by-id/make-find-customer-by-id-use-case",
+    "@application/use-cases/customer/find-customer-by-id/make-find-customer-by-id-use-case",
     () => ({
         makeFindCustomerByIdUseCase: vi.fn(),
     })

@@ -1,5 +1,5 @@
 import * as repoModule from "@persistence/prisma/category/delete-category-repository/make-delete-category-repository"
-import * as useCaseModule from "@use-cases/category/delete-category/make-delete-category-use-case"
+import * as useCaseModule from "@application/use-cases/category/delete-category/make-delete-category-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeDeleteCategoryFactory } from "./make-category-delete-dependencies"
@@ -11,7 +11,7 @@ vi.mock(
     })
 )
 vi.mock(
-    "@use-cases/category/delete-category/make-delete-category-use-case",
+    "@application/use-cases/category/delete-category/make-delete-category-use-case",
     () => ({
         makeDeleteCategoryUseCase: vi.fn(),
     })

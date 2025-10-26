@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/order/find-order-by-customer-repository/make-find-order-by-customer-repository"
-import * as useCaseModule from "@use-cases/order/find-order-by-customer/make-find-order-by-customer-use-case"
+import * as useCaseModule from "@application/use-cases/order/find-order-by-customer/make-find-order-by-customer-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeGetOrderByCustomerFactory } from "./make-order-get-by-customer-dependencies"
 
 vi.mock(
-    "@use-cases/order/find-order-by-customer/make-find-order-by-customer-use-case",
+    "@application/use-cases/order/find-order-by-customer/make-find-order-by-customer-use-case",
     () => ({
         makeFindOrderByCustomerUseCase: vi.fn(),
     })
@@ -12,7 +12,7 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/order/find-order-by-customer-repository/make-find-order-by-customer-repository",
     () => ({
-        makeFindOrderByCustomerRepository: vi.fn(),
+        makeFindOrderByCustomerOutputPort: vi.fn(),
     })
 )
 
@@ -26,7 +26,7 @@ describe("makeGetOrderByCustomerFactory", () => {
 
     beforeEach(() => {
         mockedMakeFindOrderByCustomerRepository = vi.mocked(
-            repoModule.makeFindOrderByCustomerRepository
+            repoModule.makeFindOrderByCustomerOutputPort
         )
         mockedMakeFindOrderByCustomerUseCase = vi.mocked(
             useCaseModule.makeFindOrderByCustomerUseCase
@@ -45,7 +45,7 @@ describe("makeGetOrderByCustomerFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeGetOrderByCustomerFactory()
-        expect(repoModule.makeFindOrderByCustomerRepository).toHaveBeenCalled()
+        expect(repoModule.makeFindOrderByCustomerOutputPort).toHaveBeenCalled()
         expect(
             useCaseModule.makeFindOrderByCustomerUseCase
         ).toHaveBeenCalledWith(mockRepository)

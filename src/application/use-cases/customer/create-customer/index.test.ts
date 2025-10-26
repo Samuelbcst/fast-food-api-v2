@@ -1,11 +1,11 @@
-import type { CreateCustomerRepository } from "@src/application/repositories/customer/create-customer"
-import { CustomError } from "@use-cases/custom-error"
+import type { CreateCustomerOutputPort } from "@application/ports/output/customer/create-customer-output-port"
+import { CustomError } from "@application/use-cases/custom-error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { CreateCustomerUseCase } from "."
 
 describe("CreateCustomerUseCase", () => {
-    let repository: CreateCustomerRepository
+    let repository: CreateCustomerOutputPort
     let useCase: CreateCustomerUseCase
     const input = {
         name: "Test",

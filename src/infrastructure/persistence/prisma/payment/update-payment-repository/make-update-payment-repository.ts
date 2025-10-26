@@ -1,7 +1,8 @@
 import { PrismaUpdatePaymentOutputPort } from "./update-payment-repository"
 
-export const makeUpdatePaymentRepository = async () => {
+export const makeUpdatePaymentOutputPort = async () => {
     return new PrismaUpdatePaymentOutputPort()
 }
 
-export const makeUpdatePaymentOutputPort = makeUpdatePaymentRepository
+// Deprecated: use makeUpdatePaymentOutputPort
+export const makeUpdatePaymentRepository = makeUpdatePaymentOutputPort

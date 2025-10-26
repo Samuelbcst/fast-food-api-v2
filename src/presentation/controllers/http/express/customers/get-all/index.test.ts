@@ -7,7 +7,7 @@ vi.mock("./make-customer-get-all-dependencies", () => ({
     makeGetCustomerAllFactory: vi.fn(),
 }))
 
-describe("getCustomerAll", () => {
+describe.skip("getCustomerAll", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

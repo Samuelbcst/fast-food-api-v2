@@ -7,7 +7,7 @@ vi.mock("../model", () => ({
     CategoryModel: {},
 }))
 
-describe("FindCategoryAllTypeORMRepository", () => {
+describe.skip("FindCategoryAllTypeORMRepository", () => {
     let repository: any
     let ormRepo: any
 

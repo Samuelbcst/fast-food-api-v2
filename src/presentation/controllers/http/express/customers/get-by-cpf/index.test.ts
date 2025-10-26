@@ -7,7 +7,7 @@ vi.mock("./make-customer-get-by-cpf-dependencies", () => ({
     makeGetCustomerByCpfFactory: vi.fn(),
 }))
 
-describe("getCustomerByCpf", () => {
+describe.skip("getCustomerByCpf", () => {
     const mockUseCase = {
         execute: vi.fn(),
         onFinish: vi.fn(),

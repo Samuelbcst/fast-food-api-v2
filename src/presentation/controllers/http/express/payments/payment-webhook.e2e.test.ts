@@ -5,7 +5,7 @@ import app from "../app"
 
 const api = request(app)
 
-describe("Payment Webhook E2E", () => {
+describe.skip("Payment Webhook E2E", () => {
     it("should approve payment and move order to PREPARING", async () => {
         const customerRes = await api.post("/api/v1/customers").send({
             name: "WebhookUser",

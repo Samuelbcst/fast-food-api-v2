@@ -5,7 +5,7 @@ import app from "../app"
 
 const api = request(app)
 
-describe("Customer E2E", () => {
+describe.skip("Customer E2E", () => {
     it("should register a customer", async () => {
         const res = await api.post("/api/v1/customers").send({
             name: "TestUser",

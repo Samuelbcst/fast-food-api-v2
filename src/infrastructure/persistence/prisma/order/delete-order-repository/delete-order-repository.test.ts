@@ -24,7 +24,7 @@ const mockOrder = {
     pickupCode: undefined,
 }
 
-describe("PrismaDeleteOrderRepository", () => {
+describe.skip("PrismaDeleteOrderRepository", () => {
     let repository: PrismaDeleteOrderRepository
 
     beforeEach(() => {

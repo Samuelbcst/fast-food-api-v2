@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/product/update-product-repository/make-update-product-repository"
-import * as useCaseModule from "@use-cases/product/update-product/make-update-product-use-case"
+import * as useCaseModule from "@application/use-cases/product/update-product/make-update-product-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeUpdateProductFactory } from "./make-product-update-dependencies"
 
 vi.mock(
-    "@use-cases/product/update-product/make-update-product-use-case",
+    "@application/use-cases/product/update-product/make-update-product-use-case",
     () => ({
         makeUpdateProductUseCase: vi.fn(),
     })
@@ -12,7 +12,7 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/product/update-product-repository/make-update-product-repository",
     () => ({
-        makeUpdateProductRepository: vi.fn(),
+        makeUpdateProductOutputPort: vi.fn(),
     })
 )
 
@@ -24,7 +24,7 @@ describe("makeUpdateProductFactory", () => {
 
     beforeEach(() => {
         mockedMakeUpdateProductRepository = vi.mocked(
-            repoModule.makeUpdateProductRepository
+            repoModule.makeUpdateProductOutputPort
         )
         mockedMakeUpdateProductUseCase = vi.mocked(
             useCaseModule.makeUpdateProductUseCase
@@ -41,7 +41,7 @@ describe("makeUpdateProductFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeUpdateProductFactory()
-        expect(repoModule.makeUpdateProductRepository).toHaveBeenCalled()
+        expect(repoModule.makeUpdateProductOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeUpdateProductUseCase).toHaveBeenCalledWith(
             mockRepository
         )

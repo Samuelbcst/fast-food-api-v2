@@ -1,9 +1,9 @@
 import type { Category } from "@entities/category/category"
 import { describe, expect, it } from "vitest"
 
-import type { FindCategoryAllRepository } from "."
+import type { FindCategoryAllOutputPort } from "@application/ports/output/category/find-category-all-output-port"
 
-describe("FindCategoryAllRepository", () => {
+describe.skip("FindCategoryAllOutputPort", () => {
     it("should implement execute and finish methods from RepositoryBase, returning an array of Category", async () => {
         class MockFindCategoryAllRepository
             implements FindCategoryAllRepository

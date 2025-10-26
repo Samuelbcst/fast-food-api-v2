@@ -1,4 +1,4 @@
-import { CustomError } from "@use-cases/custom-error"
+import { CustomError } from "@application/use-cases/custom-error"
 import { DeleteCategoryCommand, DeleteCategoryInputPort } from "@application/ports/input/category/delete-category-input"
 import { DeleteCategoryOutputPort } from "@application/ports/output/category/delete-category-output-port"
 
@@ -12,7 +12,7 @@ export class DeleteCategoryUseCase implements DeleteCategoryInputPort {
                 return {
                     success: false,
                     result: null,
-                    error: new CustomError(404, "Category not found"),
+                    error: new CustomError("Category not found", 404),
                 }
             }
             return {

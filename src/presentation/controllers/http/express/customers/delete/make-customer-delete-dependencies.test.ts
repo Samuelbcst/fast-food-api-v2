@@ -1,11 +1,11 @@
 import * as repoModule from "@persistence/prisma/customer/delete-customer-repository/make-delete-customer-repository"
-import * as useCaseModule from "@use-cases/customer/delete-customer/make-delete-customer-use-case"
+import * as useCaseModule from "@application/use-cases/customer/delete-customer/make-delete-customer-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { makeDeleteCustomerFactory } from "./make-customer-delete-dependencies"
 
 vi.mock(
-    "@use-cases/customer/delete-customer/make-delete-customer-use-case",
+    "@application/use-cases/customer/delete-customer/make-delete-customer-use-case",
     () => ({
         makeDeleteCustomerUseCase: vi.fn(),
     })

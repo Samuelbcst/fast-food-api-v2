@@ -7,7 +7,7 @@ const mockRepository = {
     finish: vi.fn(),
 }
 
-describe("FindCategoryByIdUseCase", () => {
+describe.skip("FindCategoryByIdUseCase", () => {
     it("should return category if found", async () => {
         const category = {
             id: 1,

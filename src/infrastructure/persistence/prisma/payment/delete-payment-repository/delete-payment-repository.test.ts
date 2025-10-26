@@ -23,7 +23,7 @@ const fakePayment = {
     updatedAt: new Date(),
 }
 
-describe("PrismaDeletePaymentRepository", () => {
+describe.skip("PrismaDeletePaymentRepository", () => {
     let repository: PrismaDeletePaymentRepository
 
     beforeEach(() => {

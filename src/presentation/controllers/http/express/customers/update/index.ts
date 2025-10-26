@@ -1,4 +1,4 @@
-import { CustomError } from "@use-cases/custom-error"
+import { CustomError } from "@application/use-cases/custom-error"
 import { Request } from "express"
 import { z } from "zod"
 
@@ -25,7 +25,7 @@ export const updateCustomer = async (
         return result
     } catch (error) {
         if (error instanceof z.ZodError) {
-            const { CustomError } = await import("@use-cases/custom-error")
+            const { CustomError } = await import("@application/use-cases/custom-error")
             const customError = new CustomError(
                 400,
                 "Validation error"

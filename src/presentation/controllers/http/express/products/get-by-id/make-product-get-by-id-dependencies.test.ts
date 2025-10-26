@@ -1,10 +1,10 @@
 import * as repoModule from "@persistence/prisma/product/find-product-by-id-repository/make-find-product-by-id-repository"
-import * as useCaseModule from "@use-cases/product/find-product-by-id/make-find-product-by-id-use-case"
+import * as useCaseModule from "@application/use-cases/product/find-product-by-id/make-find-product-by-id-use-case"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { makeGetProductByIdFactory } from "./make-product-get-by-id-dependencies"
 
 vi.mock(
-    "@use-cases/product/find-product-by-id/make-find-product-by-id-use-case",
+    "@application/use-cases/product/find-product-by-id/make-find-product-by-id-use-case",
     () => ({
         makeFindProductByIdUseCase: vi.fn(),
     })
@@ -12,7 +12,7 @@ vi.mock(
 vi.mock(
     "@persistence/prisma/product/find-product-by-id-repository/make-find-product-by-id-repository",
     () => ({
-        makeFindProductByIdRepository: vi.fn(),
+        makeFindProductByIdOutputPort: vi.fn(),
     })
 )
 
@@ -24,7 +24,7 @@ describe("makeGetProductByIdFactory", () => {
 
     beforeEach(() => {
         mockedMakeFindProductByIdRepository = vi.mocked(
-            repoModule.makeFindProductByIdRepository
+            repoModule.makeFindProductByIdOutputPort
         )
         mockedMakeFindProductByIdUseCase = vi.mocked(
             useCaseModule.makeFindProductByIdUseCase
@@ -43,7 +43,7 @@ describe("makeGetProductByIdFactory", () => {
 
     it("creates use case with repository and returns it", async () => {
         const result = await makeGetProductByIdFactory()
-        expect(repoModule.makeFindProductByIdRepository).toHaveBeenCalled()
+        expect(repoModule.makeFindProductByIdOutputPort).toHaveBeenCalled()
         expect(useCaseModule.makeFindProductByIdUseCase).toHaveBeenCalledWith(
             mockRepository
         )

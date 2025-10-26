@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import { UseCaseResult } from "@use-cases/use-case-result"
+import { UseCaseResult } from "@application/use-cases/use-case-result"
 
 type ExectuableEndpoint = (
     params: Request["params"],
