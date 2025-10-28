@@ -24,8 +24,8 @@ export class FindOrderByIdUseCase implements FindOrderByIdInputPort {
                 success: false,
                 result: null,
                 error: new CustomError(
-                    400,
-                    (error as Error)?.message || "Failed to find order"
+                    (error as Error)?.message || "Failed to find order",
+                    400
                 ),
             }
         }

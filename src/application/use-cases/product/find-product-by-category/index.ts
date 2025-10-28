@@ -20,9 +20,9 @@ export class FindProductByCategoryUseCase implements FindProductByCategoryInputP
                     success: false,
                     result: [],
                     error: new CustomError(
-                        404,
-                        "No products found for this category."
-                    ),
+                    "No products found for this category.",
+                    404
+                ),
                 }
             }
             return {
@@ -34,9 +34,9 @@ export class FindProductByCategoryUseCase implements FindProductByCategoryInputP
                 success: false,
                 result: [],
                 error: new CustomError(
-                    400,
                     (error as Error)?.message ||
-                        "Failed to find products by category"
+                        "Failed to find products by category",
+                    400
                 ),
             }
         }

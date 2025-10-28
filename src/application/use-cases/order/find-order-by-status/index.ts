@@ -7,15 +7,18 @@ export class FindOrderByStatusUseCase implements FindOrderByStatusInputPort {
 
     async execute(input: FindOrderByStatusCommand) {
         try {
-            const orders = await this.repository.execute(input.status)
+            // Adapter boundary: cast incoming string to OrderStatus enum
+            const orders = await this.repository.execute(
+                (input.status as unknown) as import("@entities/order/order").OrderStatus
+            )
             if (!orders || orders.length === 0) {
                 return {
                     success: false,
                     result: [],
                     error: new CustomError(
-                        404,
-                        "No orders found for this status."
-                    ),
+                    "No orders found for this status.",
+                    404
+                ),
                 }
             }
             return {
@@ -27,8 +30,8 @@ export class FindOrderByStatusUseCase implements FindOrderByStatusInputPort {
                 success: false,
                 result: [],
                 error: new CustomError(
-                    400,
-                    (error as Error)?.message || "Failed to find orders"
+                    (error as Error)?.message || "Failed to find orders by status",
+                    400
                 ),
             }
         }

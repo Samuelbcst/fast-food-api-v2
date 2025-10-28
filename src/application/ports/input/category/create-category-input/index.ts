@@ -1,9 +1,15 @@
 import { Category } from "@entities/category/category"
 import { UseCase } from "@application/use-cases/base-use-case"
-import { BaseEntity } from "@entities/base-entity"
 
-export interface CreateCategoryCommand extends Omit<Category, keyof BaseEntity> {}
+/**
+ * Command for creating a new category
+ * Simple DTO representing the data needed to create a category
+ */
+export interface CreateCategoryCommand {
+    name: string
+    description: string
+}
 
-export interface CreateCategoryInputPort 
+export interface CreateCategoryInputPort
     extends UseCase<CreateCategoryCommand, Category> {}
 

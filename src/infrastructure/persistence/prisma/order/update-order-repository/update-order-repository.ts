@@ -82,3 +82,6 @@ export class PrismaUpdateOrderOutputPort implements UpdateOrderOutputPort {
         await prisma.$disconnect()
     }
 }
+
+// Backwards-compatible class alias (legacy tests/imports)
+export class PrismaUpdateOrderRepository extends PrismaUpdateOrderOutputPort {}

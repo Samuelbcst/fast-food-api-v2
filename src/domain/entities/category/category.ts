@@ -3,10 +3,25 @@ import { CategoryCreatedEvent } from "../../events/category/category-created-eve
 import { CategoryUpdatedEvent } from "../../events/category/category-updated-event"
 
 /**
+ * Domain Exception for Category-specific business rule violations
+ */
+export class CategoryDomainError extends Error {
+    constructor(message: string) {
+        super(message)
+        this.name = "CategoryDomainError"
+    }
+}
+
+/**
  * Category Domain Entity
  *
  * Represents a product category in the fast-food system.
  * Categories are used to organize products (Lanche, Acompanhamento, Bebida, Sobremesa).
+ *
+ * Business rules:
+ * - Category name must not be empty (2-100 characters)
+ * - Description is optional but must not exceed 500 characters
+ * - Categories organize products into logical groups
  */
 export class Category extends BaseEntity {
     /**
@@ -24,6 +39,10 @@ export class Category extends BaseEntity {
         raiseEvent: boolean = false
     ) {
         super()
+
+        // Validate invariants on construction
+        this.validateName(_name)
+        this.validateDescription(_description)
 
         // If raiseEvent is true, this is a NEW category being created
         // If false, we're reconstructing an existing category from the database
@@ -55,6 +74,10 @@ export class Category extends BaseEntity {
         return this._description
     }
 
+    // ========================================
+    // BUSINESS LOGIC - Category Updates
+    // ========================================
+
     /**
      * Update the category
      *
@@ -63,8 +86,12 @@ export class Category extends BaseEntity {
      *
      * @param name New name for the category
      * @param description New description for the category
+     * @throws CategoryDomainError if validation fails
      */
     update(name: string, description: string): void {
+        this.validateName(name)
+        this.validateDescription(description)
+
         const previousName = this._name
 
         this._name = name
@@ -74,6 +101,115 @@ export class Category extends BaseEntity {
         this.addDomainEvent(
             new CategoryUpdatedEvent(this._id, name, description, previousName)
         )
+    }
+
+    /**
+     * Update category name only
+     *
+     * @throws CategoryDomainError if name is invalid
+     */
+    updateName(name: string): void {
+        this.validateName(name)
+
+        const previousName = this._name
+        this._name = name
+
+        this.addDomainEvent(
+            new CategoryUpdatedEvent(this._id, name, this._description, previousName)
+        )
+    }
+
+    /**
+     * Update category description only
+     *
+     * @throws CategoryDomainError if description is invalid
+     */
+    updateDescription(description: string): void {
+        this.validateDescription(description)
+
+        this._description = description
+
+        this.addDomainEvent(
+            new CategoryUpdatedEvent(this._id, this._name, description, this._name)
+        )
+    }
+
+    // ========================================
+    // QUERY METHODS (Domain Knowledge)
+    // ========================================
+
+    /**
+     * Check if category has a description
+     */
+    hasDescription(): boolean {
+        return this._description !== undefined &&
+               this._description !== null &&
+               this._description.trim().length > 0
+    }
+
+    /**
+     * Get category display name (name in title case)
+     */
+    getDisplayName(): string {
+        return this._name
+            .toLowerCase()
+            .split(" ")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
+    }
+
+    /**
+     * Check if category name matches (case-insensitive)
+     */
+    nameMatches(name: string): boolean {
+        return this._name.toLowerCase() === name.toLowerCase()
+    }
+
+    // ========================================
+    // INVARIANT VALIDATION
+    // ========================================
+
+    /**
+     * Validate category name business rule
+     * Business rule: Name must be between 2-100 characters and not empty
+     *
+     * @throws CategoryDomainError if name is invalid
+     */
+    private validateName(name: string): void {
+        if (!name || name.trim().length === 0) {
+            throw new CategoryDomainError("Category name cannot be empty")
+        }
+
+        if (name.trim().length < 2) {
+            throw new CategoryDomainError(
+                "Category name must be at least 2 characters long"
+            )
+        }
+
+        if (name.trim().length > 100) {
+            throw new CategoryDomainError(
+                "Category name cannot exceed 100 characters"
+            )
+        }
+    }
+
+    /**
+     * Validate category description business rule
+     * Business rule: Description is optional but cannot exceed 500 characters
+     *
+     * @throws CategoryDomainError if description is invalid
+     */
+    private validateDescription(description: string): void {
+        // Description is optional, so empty/null/undefined is valid
+        if (!description) {
+            return
+        }
+
+        if (description.trim().length > 500) {
+            throw new CategoryDomainError(
+                "Category description cannot exceed 500 characters"
+            )
+        }
     }
 }
 

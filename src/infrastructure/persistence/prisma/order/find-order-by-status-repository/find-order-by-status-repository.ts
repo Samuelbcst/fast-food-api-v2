@@ -41,3 +41,6 @@ export class PrismaFindOrderByStatusOutputPort
         await prisma.$disconnect()
     }
 }
+
+// Backwards-compatible class alias (legacy tests/imports)
+export class PrismaFindOrderByStatusRepository extends PrismaFindOrderByStatusOutputPort {}

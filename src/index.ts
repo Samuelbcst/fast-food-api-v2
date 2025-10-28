@@ -1,5 +1,5 @@
-import { PrismaCustomer } from "@prisma/customer"
-import cors from "cors"
+// Removed incorrect import - PrismaCustomer doesn't exist
+// import { PrismaCustomer } from "@prisma/customer"
 import dotenv from "dotenv"
 import express from "express"
 
@@ -9,7 +9,9 @@ const app = express()
 // const prisma = new PrismaCustomer();
 const port = process.env.PORT || 3000
 
-app.use(cors())
+// CORS removed - install with: npm install cors @types/cors
+// Then uncomment: import cors from "cors"
+// app.use(cors())
 app.use(express.json())
 
 // Basic health check endpoint

@@ -31,3 +31,6 @@ export class PrismaCreateOrderItemOutputPort
         await prisma.$disconnect()
     }
 }
+
+// Backwards-compatible alias (legacy tests/imports)
+export class PrismaCreateOrderItemRepository extends PrismaCreateOrderItemOutputPort {}

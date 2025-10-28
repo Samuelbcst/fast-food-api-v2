@@ -24,8 +24,8 @@ export class UpdateOrderUseCase implements UpdateOrderInputPort {
                 success: false,
                 result: null,
                 error: new CustomError(
-                    400,
-                    (error as Error)?.message || "Failed to update order"
+                    (error as Error)?.message || "Failed to update order",
+                    400
                 ),
             }
         }

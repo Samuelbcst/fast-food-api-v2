@@ -1,4 +1,3 @@
-import { BaseEntity } from "@entities/base-entity"
 import { Product } from "@entities/product/product"
 import { prisma } from "@libraries/prisma/client"
 import { CreateProductOutputPort } from "@application/ports/output/product/create-product-output-port"

@@ -39,14 +39,14 @@ export class CreatePaymentUseCase implements CreatePaymentInputPort {
                     success: false,
                     result: null,
                     error: new CustomError(
-                        400,
-                        "Payment amount must match order total"
-                    ),
+                    "Payment amount must match order total",
+                    400
+                ),
                 }
             }
 
             const created = await this.createPaymentOutputPort.create({
-                orderId: order.id,
+                orderId: Number(order.id),
                 amount,
                 paymentStatus: PaymentStatus.PENDING,
                 paidAt: null,
@@ -60,9 +60,9 @@ export class CreatePaymentUseCase implements CreatePaymentInputPort {
                 success: false,
                 result: null,
                 error: new CustomError(
-                    400,
                     (error as Error | undefined)?.message ||
-                        "Failed to create payment"
+                        "Failed to create payment",
+                    400
                 ),
             }
         }

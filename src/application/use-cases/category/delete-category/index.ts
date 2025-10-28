@@ -24,9 +24,9 @@ export class DeleteCategoryUseCase implements DeleteCategoryInputPort {
                 success: false,
                 result: null,
                 error: new CustomError(
-                    400,
                     (error as Error | undefined)?.message ||
-                        "Failed to delete category"
+                        "Failed to delete category",
+                    400
                 ),
             }
         }

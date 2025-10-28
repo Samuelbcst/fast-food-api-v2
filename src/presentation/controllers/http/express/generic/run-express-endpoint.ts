@@ -19,7 +19,7 @@ export const runExpressEndpoint = (
                 if ((error as any).details) {
                     response.details = (error as any).details
                 }
-                res.status(error.code || 400).json(response)
+                res.status(error.statusCode || 400).json(response)
                 return
             }
             res.status(figureStatusCode(success, method, error)).json(result)
@@ -43,11 +43,11 @@ const figureStatusCode = (
 ): number => {
     switch (method) {
         case "post":
-            return success ? 201 : error?.code || 500
+            return success ? 201 : error?.statusCode || 500
         case "get":
         case "put":
         case "delete":
         default:
-            return success ? 200 : error?.code || 500
+            return success ? 200 : error?.statusCode || 500
     }
 }

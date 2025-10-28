@@ -6,7 +6,20 @@ export class PrismaFindCustomerByCpfRepository
     implements FindCustomerByCpfOutputPort
 {
     async execute(cpf: string): Promise<Customer | null> {
-        return prisma.customer.findFirst({ where: { cpf } })
+        const customer = await prisma.customer.findFirst({ where: { cpf } })
+
+        if (!customer) {
+            return null
+        }
+
+        // Reconstruct rich domain Customer entity from DB
+        return new Customer(
+            customer.id.toString(),
+            customer.name,
+            customer.email,
+            customer.cpf,
+            false // Don't raise events on reconstruction from DB
+        )
     }
 
     finish() {

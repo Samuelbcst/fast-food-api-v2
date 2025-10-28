@@ -24,8 +24,8 @@ export const createCustomer = async ({}, body: Request["body"]) => {
     } catch (error) {
         if (error instanceof ZodError) {
             const customError = new CustomError(
-                400,
-                "Validation error"
+                "Validation error",
+                400
             ) as CustomError & { details?: unknown }
             customError.details = error.errors
             return {
@@ -35,8 +35,8 @@ export const createCustomer = async ({}, body: Request["body"]) => {
             }
         }
         const customError = new CustomError(
-            500,
-            (error as Error).message || "Unknown error"
+            (error as Error).message || "Unknown error",
+            500
         )
         return {
             success: false,

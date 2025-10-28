@@ -13,9 +13,9 @@ export class FindOrderByCustomerUseCase implements FindOrderByCustomerInputPort 
                     success: false,
                     result: [],
                     error: new CustomError(
-                        404,
-                        "No orders found for this customer."
-                    ),
+                    "No orders found for this customer.",
+                    404
+                ),
                 }
             }
             return {
@@ -27,8 +27,8 @@ export class FindOrderByCustomerUseCase implements FindOrderByCustomerInputPort 
                 success: false,
                 result: [],
                 error: new CustomError(
-                    400,
-                    (error as Error)?.message || "Failed to find orders"
+                    (error as Error)?.message || "Failed to find orders by customer",
+                    400
                 ),
             }
         }

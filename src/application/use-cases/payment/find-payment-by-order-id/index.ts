@@ -28,9 +28,9 @@ export class FindPaymentByOrderIdUseCase
                 success: false,
                 result: null,
                 error: new CustomError(
-                    400,
                     (error as Error | undefined)?.message ||
-                        "Failed to find payment by order id"
+                        "Failed to find payment by order id",
+                    400
                 ),
             }
         }

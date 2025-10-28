@@ -22,8 +22,8 @@ export const createOrderItem = async ({}, body: Request["body"]) => {
     const { name: productName, price: unitPrice } = productResult.result
     const useCase = await makeCreateOrderItemFactory()
     const result = await useCase.execute({
-        orderId,
-        productId,
+        orderId: orderId.toString(),
+        productId: productId.toString(),
         quantity,
         productName,
         unitPrice,

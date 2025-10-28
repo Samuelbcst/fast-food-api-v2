@@ -1,8 +1,17 @@
 import { Product } from "@entities/product/product"
 import { UseCase } from "@application/use-cases/base-use-case"
-import { BaseEntity } from "@entities/base-entity"
 
-export interface CreateProductCommand extends Omit<Product, keyof BaseEntity> {}
+/**
+ * Command for creating a new product
+ * Simple DTO representing the data needed to create a product
+ */
+export interface CreateProductCommand {
+    name: string
+    description?: string
+    price: number
+    categoryId: string
+    active?: boolean
+}
 
 export interface CreateProductInputPort
     extends UseCase<CreateProductCommand, Product> {}

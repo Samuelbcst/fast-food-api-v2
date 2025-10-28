@@ -24,3 +24,5 @@ export class PrismaDeleteOrderItemOutputPort
         await prisma.$disconnect()
     }
 }
+    // Backwards-compatible class alias
+    export class PrismaDeleteOrderItemRepository extends PrismaDeleteOrderItemOutputPort {}

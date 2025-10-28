@@ -36,3 +36,5 @@ export class PrismaUpdateOrderItemOutputPort
         await prisma.$disconnect()
     }
 }
+// Backwards-compatible class alias
+export class PrismaUpdateOrderItemRepository extends PrismaUpdateOrderItemOutputPort {}

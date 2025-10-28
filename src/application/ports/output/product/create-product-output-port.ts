@@ -1,4 +1,3 @@
-import { BaseEntity } from "@entities/base-entity"
 import { Product } from "@entities/product/product"
 
 /**

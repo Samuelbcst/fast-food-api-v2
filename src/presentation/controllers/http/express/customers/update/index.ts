@@ -27,8 +27,8 @@ export const updateCustomer = async (
         if (error instanceof z.ZodError) {
             const { CustomError } = await import("@application/use-cases/custom-error")
             const customError = new CustomError(
-                400,
-                "Validation error"
+                "Validation error",
+                400
             ) as CustomError & { details?: unknown }
             customError.details = error.errors
             return {

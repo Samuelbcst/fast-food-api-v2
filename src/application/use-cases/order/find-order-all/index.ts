@@ -17,8 +17,8 @@ export class FindOrderAllUseCase implements FindOrderAllInputPort {
                 success: false,
                 result: [],
                 error: new CustomError(
-                    400,
-                    (error as Error)?.message || "Failed to find orders"
+                    (error as Error)?.message || "Failed to find orders",
+                    400
                 ),
             }
         }

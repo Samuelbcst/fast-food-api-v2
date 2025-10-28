@@ -4,6 +4,7 @@ import { makeFindPaymentByOrderIdOutputPort } from "@persistence/prisma/payment/
 import { makeUpdatePaymentOutputPort } from "@persistence/prisma/payment/update-payment-repository/make-update-payment-repository"
 import { makeUpdateOrderStatusUseCase } from "@application/use-cases/order/update-order-status/make-update-order-status-use-case"
 import { makeProcessPaymentWebhookUseCase } from "@application/use-cases/payment/process-payment-webhook/make-process-payment-webhook-use-case"
+import { InMemoryEventDispatcher } from "@infrastructure/events/in-memory-event-dispatcher"
 
 export const makePaymentWebhookFactory = async () => {
     const paymentFinder = await makeFindPaymentByOrderIdOutputPort()
@@ -11,15 +12,19 @@ export const makePaymentWebhookFactory = async () => {
     const orderStatusRepository = await makeUpdateOrderStatusOutputPort()
     const orderFinder = await makeFindOrderByIdOutputPort()
     const paymentStatusFinder = await makeFindPaymentByOrderIdOutputPort()
+    const eventDispatcher = new InMemoryEventDispatcher()
+
     const orderStatusUseCase = makeUpdateOrderStatusUseCase(
         orderStatusRepository,
         orderFinder,
-        paymentStatusFinder
+        paymentStatusFinder,
+        eventDispatcher
     )
 
     return makeProcessPaymentWebhookUseCase(
         paymentFinder,
         paymentUpdater,
-        orderStatusUseCase
+        orderStatusUseCase,
+        eventDispatcher
     )
 }

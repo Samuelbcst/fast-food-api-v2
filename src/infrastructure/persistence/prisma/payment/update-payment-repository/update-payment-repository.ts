@@ -1,14 +1,14 @@
 import { UpdatePaymentOutputPort } from "@application/ports/output/payment/update-payment-output-port"
-import { Payment } from "@entities/payment/payment"
+import { Payment, PaymentStatus } from "@entities/payment/payment"
 import { prisma } from "@libraries/prisma/client"
 
 export class PrismaUpdatePaymentOutputPort implements UpdatePaymentOutputPort {
     async execute(param: {
-        id: Payment["id"]
-        orderId?: Payment["orderId"]
-        amount?: Payment["amount"]
-        paymentStatus?: Payment["paymentStatus"]
-        paidAt?: Payment["paidAt"]
+        id: number
+        orderId?: number
+        amount?: number
+        paymentStatus?: PaymentStatus
+        paidAt?: Date | null
     }): Promise<Payment | null> {
         const { id, orderId, amount, paymentStatus, paidAt } = param
         const payment = await prisma.payment.findUnique({ where: { id } })
@@ -16,17 +16,19 @@ export class PrismaUpdatePaymentOutputPort implements UpdatePaymentOutputPort {
         const updateData: any = { updatedAt: new Date() }
         if (orderId !== undefined) updateData.orderId = orderId
         if (amount !== undefined) updateData.amount = amount
-        if (paymentStatus !== undefined)
-            updateData.paymentStatus = paymentStatus
+        if (paymentStatus !== undefined) updateData.paymentStatus = paymentStatus as any
         if (paidAt !== undefined) updateData.paidAt = paidAt
         const updated = await prisma.payment.update({
             where: { id },
             data: updateData,
         })
-        return updated as Payment
+        return new Payment(updated.id.toString(), updated.orderId.toString(), updated.amount, updated.paymentStatus as unknown as PaymentStatus, updated.paidAt ?? null, false)
     }
 
     async finish(): Promise<void> {
         await prisma.$disconnect()
     }
 }
+
+// Backwards-compatible alias
+export class PrismaUpdatePaymentRepository extends PrismaUpdatePaymentOutputPort {}

@@ -18,7 +18,7 @@ export const createProduct = async ({}, body: Request["body"]) => {
         name,
         description,
         price,
-        categoryId,
+        categoryId: categoryId.toString(),
         active,
     })
     await useCase.onFinish()
