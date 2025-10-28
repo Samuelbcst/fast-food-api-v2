@@ -1,31 +1,43 @@
-// Removed incorrect import - PrismaCustomer doesn't exist
-// import { PrismaCustomer } from "@prisma/customer"
 import dotenv from "dotenv"
-import express from "express"
+import app from "./presentation/controllers/http/express/app"
 
-dotenv.config()
+// Load environment variables
+dotenv.config({ path: "./src/.env" })
 
-const app = express()
-// const prisma = new PrismaCustomer();
-const port = process.env.PORT || 3000
+const PORT = process.env.HOST_PORT || 3000
 
-// CORS removed - install with: npm install cors @types/cors
-// Then uncomment: import cors from "cors"
-// app.use(cors())
-app.use(express.json())
-
-// Basic health check endpoint
-app.get("/health", (req, res) => {
-    res.json({ status: "ok" })
-})
-
-async function main() {
+/**
+ * Start the Express server
+ */
+function main() {
     try {
-        app.listen(port, () => {
-            console.log(`Server is running on port ${port}`)
+        const server = app.listen(PORT, () => {
+            console.log(`\n🚀 Fast-Food API Server Started`)
+            console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`)
+            console.log(`📡 Server running on: http://localhost:${PORT}`)
+            console.log(`📚 API Documentation: http://localhost:${PORT}/api-docs`)
+            console.log(`🏥 Health Check: http://localhost:${PORT}/api/v1/health`)
+            console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`)
+        })
+
+        // Handle shutdown gracefully
+        process.on('SIGTERM', () => {
+            console.log('\n🛑 SIGTERM received, shutting down gracefully...')
+            server.close(() => {
+                console.log('✅ Server closed')
+                process.exit(0)
+            })
+        })
+
+        process.on('SIGINT', () => {
+            console.log('\n🛑 SIGINT received, shutting down gracefully...')
+            server.close(() => {
+                console.log('✅ Server closed')
+                process.exit(0)
+            })
         })
     } catch (error) {
-        console.error("Failed to start the server:", error)
+        console.error("❌ Failed to start the server:", error)
         process.exit(1)
     }
 }
